@@ -1,68 +1,104 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
+/* Стили для боковой панели DashboardLayout */
+.MuiDrawer-root .MuiDrawer-paper {
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* Список элементов в боковой панели */
+.MuiDrawer-root .MuiList-root {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+/* Растягиваем разделитель между группами */
+.MuiDivider-root {
+  flex-grow: 1 !important;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+/* Стили для заголовков групп */
+.MuiTypography-root.MuiTypography-overline {
+  font-size: 0.75rem !important;
+  /*color: #b0bec5 !important;*/
+  padding-left: 16px !important;
+  margin-top: 16px !important;
+}
+
+/* Выделение активного элемента (и родительского, и дочернего) */
+.MuiListItemButton-root.Mui-selected {
+  background-color: #dbdeee !important; /* Фон для активного элемента */
+  color: #ffffff !important; /* Белый текст */
+}
+
+/* Стили для вложенных элементов */
+.MuiListItemButton-root {
+  padding-left: 11px !important; /* Уменьшаем базовый отступ для родительских элементов */
+}
+
+/* Убираем иконки у вложенных элементов */
+.MuiListItemIcon-root {
+  display: none !important;
+}
+
+/* Восстанавливаем иконки для родительских элементов */
+.MuiListItemButton-root:not(.Mui-nested) .MuiListItemIcon-root {
+  display: flex !important;
+}
+
+/* Левый border для раскрытых вложенных списков */
+.MuiCollapse-root.MuiCollapse-entered {
+  position: relative;
+}
+
+.MuiCollapse-root.MuiCollapse-entered::before {
+  content: "";
+  position: absolute;
+  left: 33px; /* Уменьшаем отступ линии от края */
+  top: 0;
+  bottom: 0;
+  width: 2px; /* Толщина border */
+  background-color: #dadbdf; /* Цвет border */
+}
+
+/* Стили для вложенных элементов */
+.MuiList-root .MuiList-root .MuiListItemButton-root {
+  padding-left: 40px !important; /* 24px (линия) + 10px (отступ до текста) */
+  margin-left: 30px !important;
+}
+
+/* Прямоугольник для активного дочернего элемента */
+.MuiListItemButton-root.Mui-selected.Mui-nested {
+  position: relative;
+}
+
+.MuiListItemButton-root.Mui-selected.Mui-nested::before {
+  content: "";
+  position: absolute;
+  left: 22px; /* Чуть левее border, чтобы перекрыть его */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px; /* Ширина прямоугольника */
+  height: 24px; /* Высота прямоугольника */
+  background-color: #838386; /* Цвет прямоугольника */
+  border-radius: 2px; /* Скругление углов */
+}
+
+/* Убираем дублирующий стиль для активного дочернего элемента */
+.MuiList-root .MuiList-root .MuiListItemButton-root.Mui-selected {
+  position: relative;
+}
+
+/* Прямоугольник для активного дочернего элемента (второй стиль) */
+.MuiList-root .MuiList-root .MuiListItemButton-root.Mui-selected::before {
+  content: "";
+  position: absolute;
+  left: -22px; /* Чуть левее border, чтобы перекрыть его */
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 24px;
+  background-color: #838386;
+  border-radius: 2px;
 }
