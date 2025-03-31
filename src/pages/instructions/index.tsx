@@ -1,3 +1,5 @@
-export const index = () => {
-  return <div>index</div>;
-};
+import { Typography } from "@mui/material";
+
+export function InstructionsPage() {
+  return <Typography variant="h4">Instruction</Typography>;
+}
