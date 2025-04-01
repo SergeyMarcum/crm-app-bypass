@@ -6,7 +6,7 @@ import { TasksCreatePage } from "../pages/tasks/create";
 import { TasksViewPage } from "../pages/tasks/view";
 import { TasksControlPage } from "../pages/tasks/control";
 import { EmployeesPage } from "../pages/employees";
-import { UsersPage } from "../pages/users";
+import UsersPage from "../pages/users";
 import { LogsChecksPage } from "../pages/logs/checks";
 import { LogsDefectsPage } from "../pages/logs/defects";
 import { MessagesPage } from "../pages/messages";
