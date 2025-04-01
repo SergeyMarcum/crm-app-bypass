@@ -16,11 +16,7 @@ export default function DashboardLayout({
         toolbarActions: ToolbarActions,
       }}
       branding={{
-        logo: (
-          <Link to="/">
-            <Path size={45} color="#fff" />
-          </Link>
-        ),
+        logo: <Path size={45} color="#fff" />,
         title: "Обходчик",
       }}
       sx={{
