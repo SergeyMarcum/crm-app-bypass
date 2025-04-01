@@ -1,3 +1,6 @@
+@import "ag-grid-community/styles/ag-grid.css";
+@import "ag-grid-community/styles/ag-theme-material.css";
+
 /* Стили для боковой панели DashboardLayout */
 .MuiDrawer-root .MuiDrawer-paper {
   display: flex;

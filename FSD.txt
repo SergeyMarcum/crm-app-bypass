@@ -5,6 +5,11 @@ crm-app/
 │   │   ├── router.tsx             # Настройка маршрутов (Маршрутизация)
 │   ├── entities/                  # Бизнес-сущности (User, Employee, Task и т.д.)
 │   ├── features/                  # Функциональные возможности (Auth, Dashboard и т.д.)
+│   │   ├── user-list/             # user-list  
+│   │   │   ├── hooks/             # hooks user 
+│   │   │   │   ├── useUserList.ts # hook useUserList
+│   │   │   ├── components/        # components 
+│   │   │   │   ├── EditButtonRenderer.tsx  # EditButtonRenderer
 │   ├── pages/                     # Страницы приложения
 │   │   ├── calendar               # calendar  
 │   │   │   ├── index.tsx          # Страница отображения календаря работ (день, месяц, год) 
