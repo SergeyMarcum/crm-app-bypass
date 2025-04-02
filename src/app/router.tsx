@@ -9,7 +9,7 @@ import EmployeesPage from "../pages/employees";
 import UsersPage from "../pages/users";
 import { LogsChecksPage } from "../pages/logs/checks";
 import { LogsDefectsPage } from "../pages/logs/defects";
-import { MessagesPage } from "../pages/messages";
+import MessagesPage from "../pages/messages";
 import { InstructionsPage } from "../pages/instructions";
 import { SettingsPage } from "../pages/settings";
 import { HelpPage } from "../pages/help";
