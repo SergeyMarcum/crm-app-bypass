@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { DashboardPage } from "../pages/dashboard";
 import { LoginPage } from "../pages/login";
 import CalendarPage from "../pages/calendar";
-import { TasksCreatePage } from "../pages/tasks/create";
+import TasksCreatePage from "../pages/tasks/create";
 import { TasksViewPage } from "../pages/tasks/view";
 import { TasksControlPage } from "../pages/tasks/control";
 import EmployeesPage from "../pages/employees";
