@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { login as apiLogin } from "./api";
+import { useNavigate } from "react-router-dom"; // Для использования в компонентах
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -48,7 +49,7 @@ export const useAuthStore = create(
 
         if (!token || !user) {
           throw new Error(
-            "Ошибка аутентификации: токен или имя пользователя отсутствуют!"
+            "Ошибка аутентификации: токен или имя пользователя отсутствуют"
           );
         }
 
@@ -72,6 +73,7 @@ export const useAuthStore = create(
         });
         sessionStorage.clear();
         localStorage.clear();
+        // Убираем window.location.href, перенаправление будет в компонентах
       },
     }),
     { name: "auth-storage" }

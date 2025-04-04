@@ -10,6 +10,7 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  CircularProgress,
 } from "@mui/material";
 import { useTaskList } from "../../../features/tasks/hooks/useTaskList";
 import { EditButtonRenderer } from "../../../features/user-list/components/EditButtonRenderer";
@@ -21,7 +22,15 @@ ModuleRegistry.registerModules([ClientSideRowModelModule]);
 const TaskControlPage: React.FC = () => {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
-  const { rowData, columnDefs, onEditSave } = useTaskList();
+  const { rowData, columnDefs, onEditSave, isLoading } = useTaskList();
+
+  if (isLoading) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", p: 3 }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
 
   const filteredData = rowData
     .filter((task) =>
@@ -32,13 +41,6 @@ const TaskControlPage: React.FC = () => {
     .filter((task) =>
       statusFilter === "all" ? true : task.status === statusFilter
     );
-
-  const currentUserRole = "Администратор"; // Заменить на реальную роль из контекста/состояния
-  const isAdmin = [
-    "Администратор",
-    "Администратор общества",
-    "Администратор филиала",
-  ].includes(currentUserRole);
 
   return (
     <Box sx={{ p: 3 }}>

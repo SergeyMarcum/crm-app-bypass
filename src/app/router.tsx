@@ -3,7 +3,7 @@ import { useAuthStore } from "../features/auth/store";
 import DashboardLayout from "../widgets/layout/DashboardLayout";
 import Layout from "../widgets/layout/Layout";
 import LoginPage from "../pages/login";
-import DashboardPage from "../pages/dashboard"; // Предполагаем, что страница существует
+import DashboardPage from "../pages/dashboard";
 import CalendarPage from "../pages/calendar";
 import TasksCreatePage from "../pages/tasks/create";
 import TasksViewPage from "../pages/tasks/view";
@@ -18,7 +18,6 @@ import SettingsPage from "../pages/settings";
 import HelpPage from "../pages/help";
 import App from "./App";
 
-// Компонент для защиты маршрутов
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const isTestMode = useAuthStore((state) => state.isTestMode);
@@ -26,6 +25,12 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   if (isAuthenticated || isTestMode) {
     return <DashboardLayout>{children}</DashboardLayout>;
   }
+  return <Navigate to="/login" replace />;
+};
+
+const LogoutRoute = () => {
+  const { logout } = useAuthStore();
+  logout();
   return <Navigate to="/login" replace />;
 };
 
@@ -43,7 +48,7 @@ export const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        index: true, // Корневой маршрут перенаправляет на /login или /dashboard
+        index: true,
         element: (
           <ProtectedRoute>
             <Navigate to="/dashboard" replace />
@@ -163,6 +168,10 @@ export const router = createBrowserRouter([
             <HelpPage />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "logout",
+        element: <LogoutRoute />,
       },
       {
         path: "*",

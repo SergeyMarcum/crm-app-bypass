@@ -42,7 +42,7 @@ const LoginPage: React.FC = () => {
         error:
           error instanceof Error
             ? error.message
-            : "Неизвестная ошибка авторизации!",
+            : "Неизвестная ошибка авторизации.",
       });
     }
   };
@@ -50,25 +50,34 @@ const LoginPage: React.FC = () => {
   return (
     <Box
       sx={{
-        maxWidth: 400,
-        mx: "auto",
-        mt: 5,
-        p: 3,
-        boxShadow: 3,
-        borderRadius: 2,
-        bgcolor: "background.paper",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minHeight: "100vh",
+        bgcolor: "grey.100",
       }}
     >
-      <Typography variant="h5" mb={2}>
-        Вход в систему
-      </Typography>
-      <LoginForm onSubmit={handleLogin} />
-      <Snackbar
-        open={!!state.errorMessage}
-        autoHideDuration={6000}
-        onClose={() => dispatch({ type: "SET_ERROR", error: "" })}
-        message={state.errorMessage}
-      />
+      <Box
+        sx={{
+          maxWidth: 400,
+          p: 3,
+          boxShadow: 3,
+          borderRadius: 2,
+          bgcolor: "background.paper",
+        }}
+      >
+        <Typography variant="h4" mb={2} textAlign="center">
+          Авторизация
+        </Typography>
+        <LoginForm onSubmit={handleLogin} />
+        <Snackbar
+          open={!!state.errorMessage}
+          autoHideDuration={6000}
+          onClose={() => dispatch({ type: "SET_ERROR", error: "" })}
+          message={state.errorMessage}
+          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        />
+      </Box>
     </Box>
   );
 };
