@@ -5,9 +5,21 @@ crm-app/
 │   │   ├── router.tsx             # Настройка маршрутов (Маршрутизация)
 │   ├── entities/                  # Бизнес-сущности (User, Employee, Task и т.д.)
 │   ├── features/                  # Функциональные возможности (Auth, Dashboard и т.д.)
+│   │   ├── auth/
+│   │   │   ├── api.ts             # API для авторизации
+│   │   │   ├── store.ts           # Zustand store для авторизации
+│   │   │   ├── components/
+│   │   │   │   ├── LoginForm.tsx  # Форма входа
+│   │   ├── tasks/                 # tasks  
+│   │   │   ├── hooks/             # hooks user 
+│   │   │   │   ├── useTask.ts     # hook useTask (для просмотра задания)
+│   │   │   │   ├── useTaskList.ts # hook useTaskList (для контроля заданий)
+│   │   │   ├── components/        # components 
+│   │   │   │   ├── Chat.tsx       # Chat block
 │   │   ├── user-list/             # user-list  
 │   │   │   ├── hooks/             # hooks user 
-│   │   │   │   ├── useUserList.ts # hook useUserList
+│   │   │   │   ├── useUserList.ts # hook useUserList (для пользователей)
+│   │   │   │   ├── useEmployeeList.ts # hook useEmployeeList (для сотрудников)
 │   │   │   ├── components/        # components 
 │   │   │   │   ├── EditButtonRenderer.tsx  # EditButtonRenderer
 │   ├── pages/                     # Страницы приложения
@@ -46,8 +58,10 @@ crm-app/
 │   │   │   ├── index.tsx          # Страница отображения списка пользователей с возможностью изменения статуса и прав доступа 
 │   ├── shared/                    # Общие утилиты, хелперы, API
 │   │   ├── api                    # api 
+│   │   │   ├── axios.ts           # Настройка Axios
 │   │   │   ├── dashboardApi.ts    # api для организации отображения графиков
 │   │   │   ├── searchApi.ts       # api для организации поиска
+│   │   │   ├── taskApi.ts         # для отоброжения задач
 │   │   ├── config                 # Компонент layout 
 │   │   │   ├── navigation.tsx     # Список элементов для sidebar  
 │   ├── styles/                    # Стилистика приложения

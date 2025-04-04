@@ -426,3 +426,5 @@ export function DashboardPage() {
     </Box>
   );
 }
+
+export default DashboardPage;
