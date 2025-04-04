@@ -46,7 +46,7 @@ export const fetchDomains = async (): Promise<Record<string, string>> => {
         throw new Error("Ошибка сети. Проверьте подключение.");
       }
       throw new Error(
-        `Ошибка получения доменов: ${error.response.data?.detail || "Неизвестная ошибка"}`
+        `Ошибка получения списка доменов: ${error.response.data?.detail || "Неизвестная ошибка"}`
       );
     }
     throw new Error("Неизвестная ошибка.");

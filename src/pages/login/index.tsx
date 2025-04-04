@@ -42,7 +42,7 @@ const LoginPage: React.FC = () => {
         error:
           error instanceof Error
             ? error.message
-            : "Неизвестная ошибка авторизации.",
+            : "Неизвестная ошибка авторизации!",
       });
     }
   };
@@ -60,7 +60,7 @@ const LoginPage: React.FC = () => {
       }}
     >
       <Typography variant="h5" mb={2}>
-        Вход в CRM
+        Вход в систему
       </Typography>
       <LoginForm onSubmit={handleLogin} />
       <Snackbar

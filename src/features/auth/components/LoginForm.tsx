@@ -108,7 +108,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         {state.loading ? (
           <CircularProgress size={24} />
         ) : Object.keys(state.domains).length === 0 ? (
-          <Typography color="error">Не удалось загрузить домены</Typography>
+          <Typography color="error">
+            Не удалось загрузить список доменов
+          </Typography>
         ) : (
           <Select
             labelId="domain-label"
