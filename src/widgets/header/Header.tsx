@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -9,7 +10,6 @@ import {
   MenuItem,
 } from "@mui/material";
 import { Bell, Gear, Path, SignOut } from "@phosphor-icons/react";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../features/auth/store";
 
