@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
 import { router } from "./app/router";
@@ -20,7 +20,9 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
+        <Suspense fallback={<div>Загрузка...</div>}>
+          <RouterProvider router={router} />
+        </Suspense>
       </QueryClientProvider>
     </ErrorBoundary>
   </React.StrictMode>
