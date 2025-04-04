@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "", // Убираем baseURL (VITE_API_URL=http://192.168.1.248:8080), чтобы запросы шли через прокси Vite
+  baseURL: "", // Убираем baseURL, чтобы запросы шли через прокси Vite
   withCredentials: true,
 });
 

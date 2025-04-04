@@ -11,9 +11,11 @@ import {
 import { Bell, Gear, Path, SignOut } from "@phosphor-icons/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../features/auth/store";
 
 export default function Header() {
   const navigate = useNavigate();
+  const { logout } = useAuthStore();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -26,7 +28,8 @@ export default function Header() {
   };
 
   const handleSignOut = () => {
-    navigate("/login");
+    logout(); // Очищаем состояние
+    navigate("/login", { replace: true }); // Перенаправляем с заменой истории
     handleClose();
   };
 
@@ -35,10 +38,10 @@ export default function Header() {
       position="sticky"
       sx={{
         zIndex: 1201,
-        backgroundColor: "#1976D2", // Тёмный фон, как в примере
+        backgroundColor: "#1976D2",
         boxShadow:
-          "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)", // Тень elevation={4}
-        color: "#ffffff", // Белый цвет текста и иконок
+          "0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12)",
+        color: "#ffffff",
       }}
     >
       <Toolbar sx={{ padding: "0 24px", minHeight: 64 }}>
@@ -49,10 +52,10 @@ export default function Header() {
           variant="h6"
           sx={{
             flexGrow: 1,
-            fontSize: "1.5rem", // Размер шрифта, как в примере
-            fontWeight: 500, // Средний вес шрифта
-            color: "#ffffff", // Белый цвет
-            marginLeft: "10px", // Отступ от иконки
+            fontSize: "1.5rem",
+            fontWeight: 500,
+            color: "#ffffff",
+            marginLeft: "10px",
           }}
         >
           Обходчик
