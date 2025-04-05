@@ -1,4 +1,9 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import React from "react";
+import {
+  createBrowserRouter,
+  Navigate,
+  RouterProvider,
+} from "react-router-dom";
 import { useAuthStore } from "../features/auth/store";
 import DashboardLayout from "../widgets/layout/DashboardLayout";
 import Layout from "../widgets/layout/Layout";
@@ -18,6 +23,7 @@ import SettingsPage from "../pages/settings";
 import HelpPage from "../pages/help";
 import App from "./App";
 
+// Компонент для защиты маршрутов
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
   const isTestMode = useAuthStore((state) => state.isTestMode);
@@ -28,12 +34,14 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return <Navigate to="/login" replace />;
 };
 
+// Компонент для выхода из учетной записи
 const LogoutRoute = () => {
   const { logout } = useAuthStore();
   logout();
   return <Navigate to="/login" replace />;
 };
 
+// Определение маршрутов
 export const router = createBrowserRouter([
   {
     path: "/login",
@@ -184,3 +192,10 @@ export const router = createBrowserRouter([
     ],
   },
 ]);
+
+// Компонент роутера для использования в приложении
+export const Router: React.FC = () => {
+  return <RouterProvider router={router} />;
+};
+
+export default Router;

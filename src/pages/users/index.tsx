@@ -12,6 +12,7 @@ import {
   MenuItem,
   Modal,
   TextField,
+  CircularProgress,
 } from "@mui/material";
 import { useUserList } from "../../features/user-list/hooks/useUserList";
 import { EditButtonRenderer } from "../../features/user-list/components/EditButtonRenderer";
@@ -30,14 +31,36 @@ const UsersPage: React.FC = () => {
   });
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
-  const { rowData, columnDefs, onEditSave } = useUserList();
+  const { rowData, columnDefs, onEditSave, isLoading, error } = useUserList();
+
+  const applyFilter = useCallback(() => {
+    setFilterModal(null);
+  }, []);
+
+  if (isLoading) {
+    return (
+      <Box sx={{ display: "flex", justifyContent: "center", p: 3 }}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box sx={{ p: 3 }}>
+        <Typography variant="h4">Список пользователей</Typography>
+        <Typography color="error">
+          Ошибка загрузки данных: {(error as Error).message}
+        </Typography>
+      </Box>
+    );
+  }
 
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
 
   const openFilterModal = (type: string) => {
-    // Если фильтр уже активен, сбрасываем его при повторном нажатии
     if (filterValues[type as keyof typeof filterValues]) {
       setFilterValues({ ...filterValues, [type]: "" });
     } else {
@@ -47,39 +70,43 @@ const UsersPage: React.FC = () => {
 
   const closeFilterModal = () => setFilterModal(null);
 
-  const applyFilter = useCallback(() => {
-    closeFilterModal();
-  }, [filterValues]);
+  const statusMap: Record<number, string> = {
+    1: "Работает",
+    2: "Уволен(а)",
+    3: "Отпуск",
+    4: "Командировка",
+    5: "Больничный",
+  };
 
   const filteredData = rowData
     .filter((row) => {
       switch (tabValue) {
         case 0:
-          return true; // Все
+          return true;
         case 1:
-          return row.status === "На работе";
+          return statusMap[row.status_id || 0] === "Работает";
         case 2:
-          return row.status === "На больничном";
+          return statusMap[row.status_id || 0] === "Больничный";
         case 3:
-          return row.status === "В командировке";
+          return statusMap[row.status_id || 0] === "Командировка";
         case 4:
-          return row.status === "В отпуске";
+          return statusMap[row.status_id || 0] === "Отпуск";
         case 5:
-          return row.status === "Уволен";
+          return statusMap[row.status_id || 0] === "Уволен(а)";
         default:
           return true;
       }
     })
     .filter((row) =>
-      filterValues.email ? row.email.includes(filterValues.email) : true
+      filterValues.email ? (row.email || "").includes(filterValues.email) : true
     )
     .filter((row) =>
       filterValues.department
-        ? row.department.includes(filterValues.department)
+        ? (row.department || "").includes(filterValues.department)
         : true
     )
     .filter((row) =>
-      filterValues.phone ? row.phone.includes(filterValues.phone) : true
+      filterValues.phone ? (row.phone || "").includes(filterValues.phone) : true
     )
     .sort((a, b) => (sortOrder === "desc" ? b.id - a.id : a.id - b.id));
 
@@ -92,11 +119,11 @@ const UsersPage: React.FC = () => {
 
       <Tabs value={tabValue} onChange={handleTabChange} sx={{ mb: 2 }}>
         <Tab label="Все" />
-        <Tab label="На работе" />
-        <Tab label="На больничном" />
-        <Tab label="В командировке" />
-        <Tab label="В отпуске" />
-        <Tab label="Уволены" />
+        <Tab label="Работает" />
+        <Tab label="Больничный" />
+        <Tab label="Командировка" />
+        <Tab label="Отпуск" />
+        <Tab label="Уволен(а)" />
       </Tabs>
 
       <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
@@ -153,9 +180,7 @@ const UsersPage: React.FC = () => {
               sx={{ mt: 2 }}
             >
               <MenuItem value="">Все отделы</MenuItem>
-              <MenuItem value="IT">IT</MenuItem>
-              <MenuItem value="HR">HR</MenuItem>
-              {/* Добавь другие отделы */}
+              <MenuItem value="ОСЭиРЛИУС">ОСЭиРЛИУС</MenuItem>
             </Select>
           ) : (
             <TextField

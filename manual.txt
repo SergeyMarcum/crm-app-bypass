@@ -1,0 +1,30 @@
+# Права доступа
+ROLE_SUPER_USER = 1 // Администратор ИТЦ
+ROLE_COMPANY_ADMIN = 2 // Администратор Филиала
+ROLE_SHIFT_MANAGER = 3 // Мастер
+ROLE_OPERATOR = 4 // Оператор
+ROLE_OBSERVER = 5 // Наблюдатель Филиала (Директор, Главный инженер, начальник отдела)
+ROLE_GUEST = 6 // Гость
+ROLE_DISMISSED = 7 // Уволенные 
+ROLE_MAIN_ADMIN = 8 // Администратор Общества
+
+# Статус пользователя
+id | Статус
+1  | Работает
+2  | Уволен(а)
+3  | Отпуск
+4  | Командировка
+5  | Больничный
+
+# Статус задания
+TASK_STATUS_IN_CHECK = {"id": 1, "text": "Ожидается проверка объекта"}
+TASK_STATUS_DOWNLOADED = {"id": 2, "text": "Задание скачано"}
+TASK_STATUS_WAITING_FOR_THE_REPORT = {"id": 3, "text": "Ожидается загрузка отчёта"}
+TASK_STATUS_COMPLETED = {"id": 40, "text": "Выполнено"}
+TASK_STATUS_COMPLETED_WITH_ISSUES = {"id": 41, "text": "Выполнено, имеются недостатки"}
+TASK_STATUS_EXPIRED = {"id": 5, "text": "Задание не выполнено"}
+
+# Уровень важности несоответсвия
+IMPORTANCE_LEVEL_LOW = {"id": 0, "text": "Низкий"}
+IMPORTANCE_LEVEL_MEDIUM = {"id": 1, "text": "Средний"}
+IMPORTANCE_LEVEL_HIGH = {"id": 2, "text": "Высокий"}

@@ -1,0 +1,242 @@
+
+
+GET | /all-domain-objects | Вывести все объекты филиала
+http://192.168.1.248:8080/all-domain-objects?domain=orenburg&username=frontend&session_code=ovEi1U7mAQ_pgIUciF4zoRZuhPtV9R75sbEYbyR9GSc
+
+
+GET | /operator-tasks | Выводит задания оператора
+http://192.168.1.248:8080/operator-tasks?domain=orenburg&username=frontend&session_code=ovEi1U7mAQ_pgIUciF4zoRZuhPtV9R75sbEYbyR9GSc
+
+GET | /object-tasks | Выводит все задания по объекту
+http://192.168.1.248:8080/object-tasks?domain=orenburg&username=frontend&session_code=ovEi1U7mAQ_pgIUciF4zoRZuhPtV9R75sbEYbyR9GSc
+
+GET | /domain-tasks | Выводит все задания по филиалу
+http://192.168.1.248:8080/domain-tasks?domain=orenburg&username=frontend&session_code=ovEi1U7mAQ_pgIUciF4zoRZuhPtV9R75sbEYbyR9GSc
+
+GET | /generate-xml-task | Генерирует задание в формате XML
+
+
+GET | /dashboard | Выводит данные для dashboard пользователя
+http://192.168.1.248:8080/dashboard?domain=orenburg&username=frontend&session_code=ovEi1U7mAQ_pgIUciF4zoRZuhPtV9R75sbEYbyR9GSc
+передаём помимо токена и пользователя ещё домен в url
+он выдаёт:
+- количество объектов с повторными заданиями
+- список словарей {роль, количество пользователей}
+
+GET | /search | Поиск
+http://192.168.1.248:8080/search?domain=orenburg&username=frontend&session_code=ovEi1U7mAQ_pgIUciF4zoRZuhPtV9R75sbEYbyR9GSc&query=Фронтенд
+
+DOCS:
+http://192.168.1.248:8080/docs?username=frontend&session_code=PQeRkrHsauqRGOpUYzPk6LCeutHcGJvx8qhSGd7uvyc#/
+
+Тестовый пользователь контроллера домена:
+gordeev или frontend
+!QAZxsw2!@3
+orenburg
+
+При успешной авторизации в куках сохраняется session_code. Сперва нужно залогиниться, после чего можно производить запросы на эндпоинты. 
+Текущий статус проверяется функцией /check-session  
+
+
+# Аутентификация
+
+GET | /domain-list | Get Domain List
+
+POST | /login | Login User
+
+GET | /logout | Logout
+
+GET | /check-session | Проверка сессии
+
+
+# Параметры
+
+POST | /add-new-parameter | Добавление нового параметра
+
+PUT | /edit-parameter | Редактирование параметра
+
+DELETE | /delete-parameter | Удаление параметра
+
+GET | /parameters | Список всех параметров, которые есть в базе данных
+
+POST | /add-object-type | Добавление типового объекта и его параметров
+
+PUT | /edit-object-type | Редактирование типового объекта
+
+DELETE | /delete-object-type | Удаление типового объекта
+
+GET | /object-type-parameters | Получение всех параметров типового объекта
+
+
+
+# Пользователи
+
+PUT | /edit-user | Редактирование пользователя
+
+GET | /users | Получение данных о всех пользователях в базе данных
+
+GET | /all-users-company | Все пользователи филиала
+
+PUT | /dismiss-user | У существующего пользователя меняем роль на уволенного
+
+PUT | /make-main-admin | У существующего пользователя меняет роль на администратора общества
+
+PUT | /make-company-admin | У существующего пользователя меняем роль на администратора филиала
+
+GET | /users-show-company-admins | Выводит всех администраторов филиалов
+
+PUT | /make-shift-manager | У существующего пользователя меняет роль на руководителя смены
+
+GET | /users-show-shift-managers | Выводит всех руководителей смен
+
+PUT | /make-operator
+У существующего пользователя меняет роль на оператора
+
+
+GET
+/users-show-operators
+Выводит всех операторов
+
+Несоответствия
+
+
+POST
+/add-new-non-compliance
+Добавление нового несоответствия
+
+
+PUT
+/edit-non-compliance
+Редактирование несоответствия
+
+
+DELETE
+/delete-non-compliance
+Удаление несоответствия
+
+
+GET
+/cases-of-non-compliance
+Выводит все несоответствия из базы данных
+
+
+POST
+/add-parameter-non-compliance
+Добавление несоответствия параметра
+
+
+PUT
+/edit-parameter-non-compliance
+Редактирование несоответствия параметра
+
+
+DELETE
+/delete-parameter-non-compliance
+Удаление несоответствия параметра
+
+
+GET
+/all-cases-of-parameter-non-compliance
+Выводит все несоответствия определённого параметра
+
+
+POST
+/add-non-compliance-exemplar
+Добавление экземпляра несоответствия
+
+
+GET
+/non-compliance-exemplars-by-parameter
+Все экземпляры несоответствия по определённому параметру
+
+Объекты
+
+
+POST
+/add-new-object
+Добавление нового объекта
+
+
+PUT
+/edit-object
+Редактирование объекта
+
+
+DELETE
+/delete-object
+Удаление объекта
+
+
+GET
+/all-domain-objects
+Вывести все объекты филиала
+
+
+GET
+/all-objects
+Вывести все объекты из базы данных
+
+Задания
+
+
+POST
+/add-new-task
+Добавление нового задания
+
+
+PUT
+/edit-task
+Редактирование задания
+
+
+DELETE
+/delete-task
+Удаление задания
+
+
+GET
+/operator-tasks
+Выводит задания оператора
+
+
+GET
+/object-tasks
+Выводит все задания по объекту
+
+
+GET
+/domain-tasks
+Выводит все задания по филиалу
+
+
+GET
+/all-tasks
+Выводит все задания из базы данных
+
+
+GET
+/generate-xml-task
+Генерирует задание в формате XML
+
+Dashboard
+
+
+GET
+/dashboard
+Выводит данные для dashboard пользователя
+
+Отчёты
+
+
+POST
+/upload-report
+Загрузка отчёта
+
+Поиск
+
+
+GET
+/search
+Поиск
+
+
