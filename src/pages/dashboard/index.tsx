@@ -131,7 +131,7 @@ export function DashboardPage() {
     );
   }
 
-  const cardSx = { elevation: 4, borderRadius: 4, p: 2 };
+  const cardSx = { elevation: 3, borderRadius: 4, p: 2 };
 
   return (
     <Box sx={{ p: 3 }}>
