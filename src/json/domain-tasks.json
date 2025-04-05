@@ -1,0 +1,46 @@
+[
+  {
+    "id": 16,
+    "shift_id": 1,
+    "checking_type_text": null,
+    "date_time": "2025-04-6T12:19:03.373000",
+    "user_id": 2,
+    "object_id": 2,
+    "checking_type_id": 1,
+    "domain": "orenburg",
+    "date_for_search": null
+  },
+  {
+    "id": 17,
+    "shift_id": 1,
+    "checking_type_text": null,
+    "date_time": "2025-04-10T12:19:03.373000",
+    "user_id": 2,
+    "object_id": 3,
+    "checking_type_id": 1,
+    "domain": "orenburg",
+    "date_for_search": null
+  },
+  {
+    "id": 18,
+    "shift_id": 1,
+    "checking_type_text": null,
+    "date_time": "2025-04-11T12:19:03.373000",
+    "user_id": 3,
+    "object_id": 7,
+    "checking_type_id": 1,
+    "domain": "orenburg",
+    "date_for_search": null
+  },
+  {
+    "id": 19,
+    "shift_id": 1,
+    "checking_type_text": null,
+    "date_time": "2025-04-15T12:25:03.373000",
+    "user_id": 2,
+    "object_id": 3,
+    "checking_type_id": 1,
+    "domain": "orenburg",
+    "date_for_search": null
+  }
+]

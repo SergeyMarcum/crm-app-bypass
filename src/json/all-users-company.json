@@ -1,0 +1,96 @@
+{
+  "users": [
+    {
+      "id": 2,
+      "full_name": "Василий Гордеев",
+      "company": "ПУЭ ФУЭ",
+      "email": "gordeev@dev.of.energo.gazprom.ru",
+      "role_id": 4,
+      "status_id": 1,
+      "domain": "orenburg",
+      "position": "Инженер",
+      "name": "gordeev",
+      "department": "ОСЭиРЛИУС",
+      "phone": "9030000000"
+    },
+    {
+      "id": 8,
+      "full_name": "Иван Иванович Гардин",
+      "company": "ПУЭ ФУЭ",
+      "email": "garin@dev.of.energo.gazprom.ru",
+      "role_id": 2,
+      "status_id": 2,
+      "domain": "orenburg",
+      "position": "Инженер",
+      "name": "garin",
+      "department": "ОСЭиРЛИУС",
+      "phone": "+7(3532)10-10-08"
+    },
+    {
+      "id": 9,
+      "full_name": "Барин Иван Иванович",
+      "company": "ПУЭ ФУЭ",
+      "email": "barin@dev.of.energo.gazprom.ru",
+      "role_id": 2,
+      "status_id": 3,
+      "domain": "orenburg",
+      "position": "Начальник отдела",
+      "name": "barin",
+      "department": "ОСЭиРЛИУС",
+      "phone": "+7(3532)10-10-09"
+    },
+    {
+      "id": 10,
+      "full_name": "Зарин Иван Иванович",
+      "company": "ПУЭ ФУЭ",
+      "email": "zarin@dev.of.energo.gazprom.ru",
+      "role_id": 3,
+      "status_id": 4,
+      "domain": "orenburg",
+      "position": "Заместитель начальника отдела",
+      "name": "zarin",
+      "department": "ОСЭиРЛИУС",
+      "phone": "+7(3532)10-10-10"
+    },
+    {
+      "id": 11,
+      "full_name": "Шарин Иван Иванович",
+      "company": "ПУЭ ФУЭ",
+      "email": "sharin@dev.of.energo.gazprom.ru",
+      "role_id": 3,
+      "status_id": 2,
+      "domain": "orenburg",
+      "position": "Инженер",
+      "name": "sharin",
+      "department": "ОСЭиРЛИУС",
+      "phone": "+7(3532)10-10-11"
+    },
+    {
+      "id": 12,
+      "full_name": "Шарин Иван Иванович",
+      "company": "ПУЭ ФУЭ",
+      "email": "sharin@dev.of.energo.gazprom.ru",
+      "role_id": 3,
+      "status_id": 1,
+      "domain": "orenburg",
+      "position": "Начальник отдела",
+      "name": "sharin",
+      "department": "ТоСё",
+      "phone": "+7(3532)10-10-12"
+    },
+    {
+      "id": 3,
+      "full_name": "Ф. Ф. Фронтендов",
+      "company": "ПУЭ ФУЭ",
+      "email": "sharin@dev.of.energo.gazprom.ru",
+      "role_id": 2,
+      "status_id": 2,
+      "domain": "orenburg",
+      "position": "Инженер",
+      "name": "frontend",
+      "department": "ОСЭиРЛИУС",
+      "phone": "+7(3532)10-10-03"
+    }
+  ],
+  "departments": ["ОСЭиРЛИУС"]
+}
