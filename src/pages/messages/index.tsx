@@ -20,7 +20,7 @@ import {
 } from "@mui/material";
 import { Send as SendIcon } from "@mui/icons-material";
 import { useChatStore } from "../../entities/message/model";
-import { Contact, Message } from "../../entities/message/types";
+import { Message } from "../../entities/message/types";
 
 // Стилизованные компоненты для сообщений
 const OutgoingMessage = styled(Box)(({ theme }) => ({

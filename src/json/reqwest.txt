@@ -38,7 +38,7 @@ orenburg
 Текущий статус проверяется функцией /check-session  
 
 
-# Аутентификация
+# Аутентификация:
 
 GET | /domain-list | Get Domain List
 
@@ -49,7 +49,7 @@ GET | /logout | Logout
 GET | /check-session | Проверка сессии
 
 
-# Параметры
+# Параметры:
 
 POST | /add-new-parameter | Добавление нового параметра
 
@@ -69,7 +69,7 @@ GET | /object-type-parameters | Получение всех параметров
 
 
 
-# Пользователи
+# Пользователи:
 
 PUT | /edit-user | Редактирование пользователя
 
@@ -89,154 +89,78 @@ PUT | /make-shift-manager | У существующего пользовател
 
 GET | /users-show-shift-managers | Выводит всех руководителей смен
 
-PUT | /make-operator
-У существующего пользователя меняет роль на оператора
+PUT | /make-operator | У существующего пользователя меняет роль на оператора
+
+GET | /users-show-operators | Выводит всех операторов
 
 
-GET
-/users-show-operators
-Выводит всех операторов
+# Несоответствия:
 
-Несоответствия
+POST | /add-new-non-compliance | Добавление нового несоответствия
 
+PUT | /edit-non-compliance | Редактирование несоответствия
 
-POST
-/add-new-non-compliance
-Добавление нового несоответствия
+DELETE | /delete-non-compliance | Удаление несоответствия
 
+GET | /cases-of-non-compliance | Выводит все несоответствия из базы данных
 
-PUT
-/edit-non-compliance
-Редактирование несоответствия
+POST | /add-parameter-non-compliance | Добавление несоответствия параметра
 
+PUT | /edit-parameter-non-compliance | Редактирование несоответствия параметра
 
-DELETE
-/delete-non-compliance
-Удаление несоответствия
+DELETE | /delete-parameter-non-compliance | Удаление несоответствия параметра
 
+GET | /all-cases-of-parameter-non-compliance | Выводит все несоответствия определённого параметра
 
-GET
-/cases-of-non-compliance
-Выводит все несоответствия из базы данных
+POST | /add-non-compliance-exemplar | Добавление экземпляра несоответствия
+
+GET | /non-compliance-exemplars-by-parameter | Все экземпляры несоответствия по определённому параметру
 
 
-POST
-/add-parameter-non-compliance
-Добавление несоответствия параметра
+# Объекты:
+
+POST | /add-new-object | Добавление нового объекта
+
+PUT | /edit-object | Редактирование объекта
+
+DELETE | /delete-object | Удаление объекта
+
+GET | /all-domain-objects | Вывести все объекты филиала
+
+GET | /all-objects | Вывести все объекты из базы данных
 
 
-PUT
-/edit-parameter-non-compliance
-Редактирование несоответствия параметра
+# Задания:
+
+POST | /add-new-task | Добавление нового задания
+
+PUT | /edit-task | Редактирование задания
+
+DELETE | /delete-task | Удаление задания
+
+GET | /operator-tasks | Выводит задания оператора
+
+GET | /object-tasks | Выводит все задания по объекту
+
+GET | /domain-tasks | Выводит все задания по филиалу
+
+GET | /all-tasks | Выводит все задания из базы данных
+
+GET | /generate-xml-task | Генерирует задание в формате XML
 
 
-DELETE
-/delete-parameter-non-compliance
-Удаление несоответствия параметра
+# Dashboard:
+
+GET | /dashboard | Выводит данные для dashboard пользователя
 
 
-GET
-/all-cases-of-parameter-non-compliance
-Выводит все несоответствия определённого параметра
+# Отчёты:
+
+POST | /upload-report | Загрузка отчёта
 
 
-POST
-/add-non-compliance-exemplar
-Добавление экземпляра несоответствия
+# Поиск:
 
-
-GET
-/non-compliance-exemplars-by-parameter
-Все экземпляры несоответствия по определённому параметру
-
-Объекты
-
-
-POST
-/add-new-object
-Добавление нового объекта
-
-
-PUT
-/edit-object
-Редактирование объекта
-
-
-DELETE
-/delete-object
-Удаление объекта
-
-
-GET
-/all-domain-objects
-Вывести все объекты филиала
-
-
-GET
-/all-objects
-Вывести все объекты из базы данных
-
-Задания
-
-
-POST
-/add-new-task
-Добавление нового задания
-
-
-PUT
-/edit-task
-Редактирование задания
-
-
-DELETE
-/delete-task
-Удаление задания
-
-
-GET
-/operator-tasks
-Выводит задания оператора
-
-
-GET
-/object-tasks
-Выводит все задания по объекту
-
-
-GET
-/domain-tasks
-Выводит все задания по филиалу
-
-
-GET
-/all-tasks
-Выводит все задания из базы данных
-
-
-GET
-/generate-xml-task
-Генерирует задание в формате XML
-
-Dashboard
-
-
-GET
-/dashboard
-Выводит данные для dashboard пользователя
-
-Отчёты
-
-
-POST
-/upload-report
-Загрузка отчёта
-
-Поиск
-
-
-GET
-/search
-Поиск
+GET | /search | Поиск
 
 

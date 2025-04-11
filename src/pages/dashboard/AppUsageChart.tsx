@@ -1,3 +1,4 @@
+// src/pages/dashboard/AppUsageChart.tsx
 import {
   BarChart,
   Bar,
@@ -24,11 +25,11 @@ interface AppUsageChartProps {
   borderRadius?: number;
 }
 
-const LegendBox = styled(Box)(({ theme }) => ({
+const LegendBox = styled(Box)({
   width: 16,
   height: 16,
   borderRadius: 4,
-}));
+});
 
 const AppUsageChart = ({
   data,
@@ -75,7 +76,7 @@ const AppUsageChart = ({
                   fill="rgba(163, 191, 250, 0.6)"
                   radius={[5, 5, 0, 0]}
                   barSize={28}
-                  position="insideLeft"
+                  // Удаляем position="insideLeft", так как оно не поддерживается
                 />
               </BarChart>
             </ResponsiveContainer>

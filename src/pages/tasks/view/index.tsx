@@ -1,9 +1,9 @@
+// src/pages/tasks/view/index.tsx
 import React from "react";
 import {
   Box,
   Stack,
   Typography,
-  Avatar,
   Button,
   Paper,
   Table,
@@ -16,9 +16,9 @@ import {
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 
-import { useTask } from "../../../features/tasks/hooks/useTask";
+import { useTask } from "@/features/tasks/hooks/useTask";
 import dayjs from "dayjs";
-import { Chat } from "../../../features/tasks/components/Chat";
+import { Chat } from "@/features/tasks/components/Chat";
 
 const TaskViewPage: React.FC = () => {
   const { taskId } = useParams<{ taskId: string }>();
@@ -36,7 +36,6 @@ const TaskViewPage: React.FC = () => {
     <Container maxWidth="xl" sx={{ py: 4 }}>
       <Box sx={{ p: 3 }}>
         <Stack spacing={3}>
-          {/* Заголовок и кнопки действий */}
           <Stack
             direction="row"
             justifyContent="space-between"
@@ -53,7 +52,6 @@ const TaskViewPage: React.FC = () => {
             </Stack>
           </Stack>
 
-          {/* Основная информация */}
           <Stack spacing={1}>
             <Typography variant="body1">
               <strong>Дата начала:</strong>{" "}
@@ -82,9 +80,7 @@ const TaskViewPage: React.FC = () => {
             </Typography>
           </Stack>
 
-          {/* Подблоки Объект и Оператор */}
           <Stack direction="row" spacing={3}>
-            {/* Объект */}
             <Paper
               elevation={0}
               sx={{ p: 2, flex: 1, border: "1px solid #e0e0e0" }}
@@ -106,7 +102,6 @@ const TaskViewPage: React.FC = () => {
               </Stack>
             </Paper>
 
-            {/* Оператор */}
             <Paper
               elevation={0}
               sx={{ p: 2, flex: 1, border: "1px solid #e0e0e0" }}
@@ -124,7 +119,6 @@ const TaskViewPage: React.FC = () => {
             </Paper>
           </Stack>
 
-          {/* Таблица параметров */}
           <Box>
             <Typography variant="h6" mb={2}>
               Параметры проверки объекта
@@ -159,12 +153,11 @@ const TaskViewPage: React.FC = () => {
             </TableContainer>
           </Box>
 
-          {/* Чат */}
           <Box>
             <Typography variant="h6" mb={2}>
               История проверки
             </Typography>
-            <Chat taskId={taskId} />
+            <Chat />
           </Box>
         </Stack>
       </Box>

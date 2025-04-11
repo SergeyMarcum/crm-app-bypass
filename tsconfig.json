@@ -7,6 +7,14 @@
   "compilerOptions": {
     "skipLibCheck": true,
     "strict": true,
-    "jsx": "react-jsx"
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "jsx": "react-jsx",
+    "baseUrl": "src", // Базовый путь для всех импортов
+    "paths": {
+      "@/*": ["*"] // Разрешение импортов вида @/...
+    }
   }
 }

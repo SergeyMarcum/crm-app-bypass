@@ -4,6 +4,9 @@ crm-app/
 │   │   ├── App.tsx                # Корневой компонент  
 │   │   ├── router.tsx             # Настройка маршрутов (Маршрутизация)
 │   ├── entities/                  # Бизнес-сущности (User, Employee, Task и т.д.)
+│   │   ├── user.ts                # типы для Интерфейс пользователя
+│   │   ├── task.ts                # типы для Интерфейс задачи
+│   │   ├── employee.ts            # типы для Интерфейс сотрудника
 │   ├── features/                  # Функциональные возможности (Auth, Dashboard и т.д.)
 │   │   ├── auth/
 │   │   │   ├── api.ts             # API для авторизации
@@ -60,8 +63,17 @@ crm-app/
 │   │   ├── api                    # api 
 │   │   │   ├── axios.ts           # Настройка Axios
 │   │   │   ├── dashboardApi.ts    # api для организации отображения графиков
+│   │   │   ├── nonComplianceApi.ts # api для организации отображения Несоответствия 
+│   │   │   ├── objectApi.ts       # api для организации объектов
+│   │   │   ├── parameterApi.ts    # api для организации параметров проверки объектов
+│   │   │   ├── reportApi.ts       # api для организации выгрузки отчета
 │   │   │   ├── searchApi.ts       # api для организации поиска
 │   │   │   ├── taskApi.ts         # для отоброжения задач
+│   │   │   ├── userApi.ts         # для отоброжения пользователей
+│   │   │   ├── helpApi.ts         # для работы с формой для обратной связи с техподержкой
+│   │   │   ├── settingsApi.ts     # для работы со страницей настройки
+│   │   ├── hooks                  # hooks
+│   │   │   ├── useUser.ts         # Хук useUser
 │   │   ├── config                 # Компонент layout 
 │   │   │   ├── navigation.tsx     # Список элементов для sidebar  
 │   ├── styles/                    # Стилистика приложения
@@ -79,4 +91,9 @@ crm-app/
 │   │   │   ├── ToolbarActions.tsx # Компонент дополнение для шапки приложения  
 │   ├── main.tsx                   # Точка входа
 │   ├── vite-env.d.ts              # Глобальная конфигурация приложения
-│── .env     
+│── db.json                        # База данных для JSON-сервера
+│── package.json                   # Файл конфигурации npm
+│── vite-env.d.ts                  # env for Vite
+│── vite.config.ts                 # Конфигурация Vite
+│── .env
+│── .env.test  

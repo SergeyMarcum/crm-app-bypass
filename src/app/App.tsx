@@ -1,12 +1,26 @@
+import React, { useEffect } from "react";
 import { ReactRouterAppProvider } from "@toolpad/core/react-router";
 import { Outlet } from "react-router-dom";
-import { NAVIGATION } from "../shared/config/navigation";
-import theme from "../styles/theme";
+import { ThemeProvider } from "@mui/material/styles";
+import { getTheme } from "@/styles/theme";
+import { useAuthStore } from "@/features/auth/store";
 
 export default function App() {
+  const [currentTheme, setCurrentTheme] = React.useState(getTheme());
+
+  // Подписываемся на изменения темы в сторе
+  useEffect(() => {
+    const unsubscribe = useAuthStore.subscribe(() => {
+      setCurrentTheme(getTheme());
+    });
+    return () => unsubscribe();
+  }, []);
+
   return (
-    <ReactRouterAppProvider navigation={NAVIGATION} theme={theme}>
-      <Outlet />
-    </ReactRouterAppProvider>
+    <ThemeProvider theme={currentTheme}>
+      <ReactRouterAppProvider theme={currentTheme}>
+        <Outlet />
+      </ReactRouterAppProvider>
+    </ThemeProvider>
   );
 }
