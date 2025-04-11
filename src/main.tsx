@@ -1,12 +1,14 @@
+// src/main.tsx
 import React, { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { RouterProvider } from "react-router-dom";
-import { router } from "./app/router";
+import { router } from "./app/router-config";
 import "./styles/index.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ErrorBoundary } from "./app/ErrorBoundary";
+import { ThemeProvider } from "@mui/material/styles";
+import getTheme from "./styles/theme";
 
-// Создаем экземпляр QueryClient
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -20,9 +22,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
-        <Suspense fallback={<div>Загрузка...</div>}>
-          <RouterProvider router={router} />
-        </Suspense>
+        <ThemeProvider theme={getTheme()}>
+          <Suspense fallback={<div>Загрузка...</div>}>
+            <RouterProvider router={router} />
+          </Suspense>
+        </ThemeProvider>
       </QueryClientProvider>
     </ErrorBoundary>
   </React.StrictMode>

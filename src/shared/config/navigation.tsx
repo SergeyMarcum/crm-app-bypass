@@ -1,3 +1,4 @@
+// src/shared/config/navigation.ts
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import AssignmentIcon from "@mui/icons-material/Assignment";
@@ -10,7 +11,23 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import SupportIcon from "@mui/icons-material/Support";
 import LogoutIcon from "@mui/icons-material/Logout";
 
-export const NAVIGATION = [
+// Определяем тип Navigation вручную
+export type Navigation = Array<
+  | { kind: "header"; title: string }
+  | { kind: "divider" }
+  | {
+      segment?: string;
+      title: string;
+      icon?: React.ReactNode;
+      children?: Array<{
+        segment?: string;
+        title: string;
+        icon?: React.ReactNode;
+      }>;
+    }
+>;
+
+export const NAVIGATION: Navigation = [
   // Группа "Основное" (прижата к верху)
   {
     kind: "header",

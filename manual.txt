@@ -28,3 +28,7 @@ TASK_STATUS_EXPIRED = {"id": 5, "text": "Задание не выполнено"
 IMPORTANCE_LEVEL_LOW = {"id": 0, "text": "Низкий"}
 IMPORTANCE_LEVEL_MEDIUM = {"id": 1, "text": "Средний"}
 IMPORTANCE_LEVEL_HIGH = {"id": 2, "text": "Высокий"}
+
+
+Включите "Для тестирования", введите test, test123, выберите orenburg, нажмите "Войти".
+

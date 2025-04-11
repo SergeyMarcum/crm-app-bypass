@@ -1,5 +1,7 @@
+// src/features/auth/LoginForm.tsx
 import React, { useEffect, useReducer } from "react";
 import {
+  Box, // Добавляем импорт Box
   Button,
   Checkbox,
   FormControl,
@@ -14,7 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
-import { fetchDomains } from "../api";
+import { fetchDomains, fetchDomainsTest } from "../api";
 
 export interface LoginFormData {
   domain: string;
@@ -25,7 +27,7 @@ export interface LoginFormData {
 }
 
 interface LoginFormProps {
-  onSubmit: (data: LoginFormData) => void;
+  onSubmit?: (data: LoginFormData) => void;
 }
 
 const initialState = {
@@ -33,10 +35,10 @@ const initialState = {
   username: "",
   password: "",
   rememberMe: false,
-  testMode: false,
+  testMode: localStorage.getItem("apiMode") === "test",
   showPassword: false,
   domains: {} as Record<string, string>,
-  loading: true,
+  loading: false,
   error: null as string | null,
 };
 
@@ -54,7 +56,7 @@ const reducer = (state: typeof initialState, action: Action) => {
       return {
         ...state,
         domains: action.domains,
-        domain: Object.keys(action.domains)[0] || "",
+        domain: state.domain || Object.keys(action.domains)[0] || "",
       };
     case "SET_ERROR":
       return { ...state, error: action.error };
@@ -72,7 +74,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
     const loadDomains = async () => {
       dispatch({ type: "SET_LOADING", loading: true });
       try {
-        const data = await fetchDomains();
+        const data = state.testMode
+          ? await fetchDomainsTest()
+          : await fetchDomains();
         dispatch({ type: "SET_DOMAINS", domains: data });
       } catch (err) {
         dispatch({
@@ -84,21 +88,32 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
       }
     };
     loadDomains();
-  }, []);
+  }, [state.testMode]);
 
   const handleChange = (field: string, value: string | boolean) => {
     dispatch({ type: "SET_FIELD", field, value });
+    if (field === "testMode") {
+      localStorage.setItem("apiMode", value ? "test" : "real");
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit({
+    dispatch({ type: "SET_LOADING", loading: true });
+    dispatch({ type: "SET_ERROR", error: null });
+
+    const formData: LoginFormData = {
       domain: state.domain,
       username: state.username,
       password: state.password,
       rememberMe: state.rememberMe,
       testMode: state.testMode,
-    });
+    };
+
+    if (onSubmit) {
+      onSubmit(formData);
+    }
+    dispatch({ type: "SET_LOADING", loading: false });
   };
 
   return (
@@ -106,7 +121,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
       <FormControl fullWidth margin="normal" disabled={state.loading}>
         <InputLabel id="domain-label">Домен</InputLabel>
         {state.loading ? (
-          <CircularProgress size={24} />
+          <Box display="flex" justifyContent="center" padding={1}>
+            <CircularProgress size={24} />
+          </Box>
         ) : Object.keys(state.domains).length === 0 ? (
           <Typography color="error">
             Не удалось загрузить список доменов
@@ -127,7 +144,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         )}
       </FormControl>
 
-      {state.error && <Typography color="error">{state.error}</Typography>}
+      {state.error && (
+        <Typography color="error" variant="body2" sx={{ mt: 1 }}>
+          {state.error}
+        </Typography>
+      )}
 
       <TextField
         fullWidth
@@ -135,7 +156,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         label="Логин"
         value={state.username}
         onChange={(e) => handleChange("username", e.target.value)}
-        disabled={state.testMode}
+        disabled={state.loading}
       />
 
       <TextField
@@ -145,7 +166,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         type={state.showPassword ? "text" : "password"}
         value={state.password}
         onChange={(e) => handleChange("password", e.target.value)}
-        disabled={state.testMode}
+        disabled={state.loading}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
@@ -188,9 +209,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSubmit }) => {
         color="primary"
         fullWidth
         sx={{ mt: 2 }}
-        disabled={state.loading}
+        disabled={
+          state.loading || !state.domain || !state.username || !state.password
+        }
       >
-        Войти
+        {state.loading ? <CircularProgress size={24} /> : "Войти"}
       </Button>
     </form>
   );
