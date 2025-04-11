@@ -1,12 +1,14 @@
+/* Импорт стилей для ag-grid */
 @import "ag-grid-community/styles/ag-grid.css";
 @import "ag-grid-community/styles/ag-theme-material.css";
 
-/* Стили для боковой панели DashboardLayout */
+/* Основные стили для боковой панели DashboardLayout */
 .MuiDrawer-root .MuiDrawer-paper {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100vh;
+  width: var(--SideNav-width, 280px); /* Ширина боковой панели из примера */
 }
 
 /* Список элементов в боковой панели */
@@ -14,43 +16,64 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  padding: 0;
 }
 
 /* Растягиваем разделитель между группами */
 .MuiDivider-root {
   flex-grow: 1 !important;
+  background-color: var(--mui-palette-neutral-200);
 }
 
 /* Стили для заголовков групп */
 .MuiTypography-root.MuiTypography-overline {
-  font-size: 0.75rem !important;
-  /*color: #b0bec5 !important;*/
+  font-size: var(--fontSize-xs, 0.75rem) !important;
   padding-left: 16px !important;
   margin-top: 16px !important;
+  color: var(--NavGroup-title-color, var(--mui-palette-neutral-400));
 }
 
-/* Выделение активного элемента (и родительского, и дочернего) */
-.MuiListItemButton-root.Mui-selected {
-  background-color: #dbdeee !important; /* Фон для активного элемента */
-  color: #ffffff !important; /* Белый текст */
-}
-
-/* Стили для вложенных элементов */
+/* Родительский элемент навигации */
 .MuiListItemButton-root {
-  padding-left: 11px !important; /* Уменьшаем базовый отступ для родительских элементов */
+  padding: 8px 16px !important;
+  color: var(--NavItem-color, var(--mui-palette-neutral-300));
 }
 
-/* Убираем иконки у вложенных элементов */
-.MuiListItemIcon-root {
-  display: none !important;
+/* Активный родительский элемент */
+.MuiListItemButton-root.Mui-selected {
+  background-color: var(
+    --NavItem-active-background,
+    var(--mui-palette-primary-main)
+  ) !important;
+  color: var(
+    --NavItem-active-color,
+    var(--mui-palette-primary-contrastText)
+  ) !important;
 }
 
-/* Восстанавливаем иконки для родительских элементов */
-.MuiListItemButton-root:not(.Mui-nested) .MuiListItemIcon-root {
+/* Иконки родительских элементов */
+.MuiListItemButton-root .MuiListItemIcon-root {
   display: flex !important;
+  min-width: 0;
+  margin-right: 12px;
+  color: var(--NavItem-icon-color, var(--mui-palette-neutral-400));
 }
 
-/* Левый border для раскрытых вложенных списков */
+.MuiListItemButton-root.Mui-selected .MuiListItemIcon-root {
+  color: var(
+    --NavItem-icon-active-color,
+    var(--mui-palette-primary-contrastText)
+  );
+}
+
+/* Стрелка раскрытия вложенного списка */
+.MuiListItemButton-root .MuiBox-root svg[data-testid="ExpandMoreIcon"] {
+  fill: var(--NavItem-expand-color, var(--mui-palette-neutral-400));
+  width: var(--icon-fontSize-sm, 1rem);
+  height: var(--icon-fontSize-sm, 1rem);
+}
+
+/* Вложенные списки */
 .MuiCollapse-root.MuiCollapse-entered {
   position: relative;
 }
@@ -58,50 +81,49 @@
 .MuiCollapse-root.MuiCollapse-entered::before {
   content: "";
   position: absolute;
-  left: 33px; /* Уменьшаем отступ линии от края */
+  left: 28px; /* Отступ линии от края */
   top: 0;
   bottom: 0;
-  width: 2px; /* Толщина border */
-  background-color: #dadbdf; /* Цвет border */
+  width: 2px; /* Толщина линии */
+  background-color: var(
+    --NavItem-children-border,
+    var(--mui-palette-neutral-700)
+  );
 }
 
-/* Стили для вложенных элементов */
+/* Вложенные элементы */
 .MuiList-root .MuiList-root .MuiListItemButton-root {
-  padding-left: 40px !important; /* 24px (линия) + 10px (отступ до текста) */
-  margin-left: 30px !important;
+  padding-left: 40px !important; /* Отступ для вложенных элементов */
+  color: var(--NavItem-color, var(--mui-palette-neutral-300));
 }
 
-/* Прямоугольник для активного дочернего элемента */
-.MuiListItemButton-root.Mui-selected.Mui-nested {
-  position: relative;
+/* Убираем иконки у вложенных элементов */
+.MuiList-root .MuiList-root .MuiListItemButton-root .MuiListItemIcon-root {
+  display: none !important;
 }
 
-.MuiListItemButton-root.Mui-selected.Mui-nested::before {
-  content: "";
-  position: absolute;
-  left: 22px; /* Чуть левее border, чтобы перекрыть его */
-  top: 50%;
-  transform: translateY(-50%);
-  width: 4px; /* Ширина прямоугольника */
-  height: 24px; /* Высота прямоугольника */
-  background-color: #838386; /* Цвет прямоугольника */
-  border-radius: 2px; /* Скругление углов */
-}
-
-/* Убираем дублирующий стиль для активного дочернего элемента */
+/* Активный вложенный элемент */
 .MuiList-root .MuiList-root .MuiListItemButton-root.Mui-selected {
+  background-color: transparent !important; /* Убираем фон у вложенных активных элементов */
+  color: var(
+    --NavItem-active-color,
+    var(--mui-palette-primary-contrastText)
+  ) !important;
   position: relative;
 }
 
-/* Прямоугольник для активного дочернего элемента (второй стиль) */
+/* Индикатор активного вложенного элемента */
 .MuiList-root .MuiList-root .MuiListItemButton-root.Mui-selected::before {
   content: "";
   position: absolute;
-  left: -22px; /* Чуть левее border, чтобы перекрыть его */
+  left: 24px; /* Левее линии */
   top: 50%;
   transform: translateY(-50%);
   width: 4px;
   height: 24px;
-  background-color: #838386;
+  background-color: var(
+    --NavItem-children-indicator,
+    var(--mui-palette-primary-main)
+  );
   border-radius: 2px;
 }

@@ -1,10 +1,9 @@
+// src/pages/login/index.tsx
 import React, { useEffect, useReducer } from "react";
 import { Box, Snackbar, Typography } from "@mui/material";
-import { useAuthStore } from "../../features/auth/store";
+import { useAuthStore } from "@/features/auth/store";
 import { useNavigate } from "react-router-dom";
-import LoginForm, {
-  LoginFormData,
-} from "../../features/auth/components/LoginForm";
+import LoginForm, { LoginFormData } from "@/features/auth/components/LoginForm";
 
 const initialState = {
   errorMessage: "",
@@ -34,6 +33,7 @@ const LoginPage: React.FC = () => {
 
   const handleLogin = async (data: LoginFormData) => {
     try {
+      localStorage.setItem("apiMode", data.testMode ? "test" : "real");
       await login(data.username, data.password, data.domain, data.testMode);
       navigate("/dashboard");
     } catch (error: unknown) {
@@ -42,7 +42,7 @@ const LoginPage: React.FC = () => {
         error:
           error instanceof Error
             ? error.message
-            : "Неизвестная ошибка авторизации.",
+            : "Неизвестная ошибка авторизации",
       });
     }
   };

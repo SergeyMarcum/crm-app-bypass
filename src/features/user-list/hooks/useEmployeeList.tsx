@@ -129,11 +129,11 @@ export const useEmployeeList = () => {
       cellEditor: "agSelectCellEditor",
       cellEditorParams: {
         values: [
-          "На работе",
-          "На больничном",
-          "В командировке",
-          "В отпуске",
-          "Уволен",
+          "Работает",
+          "Уволен(а)",
+          "Отпуск",
+          "Командировка",
+          "Больничный",
         ],
       },
     },

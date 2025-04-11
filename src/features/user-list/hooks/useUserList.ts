@@ -5,80 +5,42 @@ import {
   CellClassParams,
 } from "ag-grid-community";
 import { useQuery } from "@tanstack/react-query";
-import { useAuthStore } from "../../auth/store";
-import { userApi } from "../../../shared/api/userApi";
-import { User } from "../../../entities/user";
-
-const mockUsers: User[] = [
-  {
-    id: 1,
-    full_name: "Иванов Иван",
-    company: "ООО Тест",
-    email: "ivanov@example.com",
-    role_id: 1,
-    status_id: 1,
-    domain: "orenburg",
-    position: "Инженер",
-    name: "ivanov",
-    department: "IT",
-    phone: "+79991234567",
-  },
-  {
-    id: 2,
-    full_name: "Петров Петр",
-    company: "ООО Тест",
-    email: "petrov@example.com",
-    role_id: 4,
-    status_id: 3,
-    domain: "orenburg",
-    position: "Менеджер",
-    name: "petrov",
-    department: "HR",
-    phone: "+79997654321",
-  },
-];
+import { useAuthStore } from "@/features/auth/store";
+import { userApi } from "@/shared/api/userApi";
+import { User } from "@/entities/user";
 
 export const useUserList = () => {
-  const { isTestMode, username, token } = useAuthStore();
+  const { isTestMode, user, token } = useAuthStore();
+  const [rowData, setRowData] = useState<User[]>([]);
 
-  const { data, isLoading, error } = useQuery<User[]>({
-    queryKey: ["users"],
+  const { data, isLoading, error } = useQuery({
+    queryKey: ["users", user?.domain],
     queryFn: async () => {
       if (isTestMode) return mockUsers;
-      const response = await userApi.getAllUsers(
-        "orenburg",
-        username || "frontend",
-        token || "novj82Hu6H1JfG81xcrDHM4CHoKJO2bAhjt4xyof4aY"
-      );
-      console.log("API Response:", response); // Отладка
-      return response.users || []; // Гарантируем массив
+      if (user?.domain && user?.name && token) {
+        const response = await userApi.getAllUsersWithParams(
+          user.domain,
+          user.name,
+          token
+        );
+        return response.users;
+      }
+      return [];
     },
-    enabled: !!username && !!token,
+    enabled: !!user?.name && !!token && !!user?.domain,
   });
 
-  const [rowData, setRowData] = useState<User[]>(isTestMode ? mockUsers : []);
-
   React.useEffect(() => {
-    console.log(
-      "Data from useQuery:",
-      data,
-      "isTestMode:",
-      isTestMode,
-      "isLoading:",
-      isLoading,
-      "error:",
-      error
-    ); // Расширенная отладка
     if (isTestMode) {
       setRowData(mockUsers);
     } else if (data) {
-      setRowData(data); // Устанавливаем данные, если они есть
+      setRowData(data);
     } else if (!isLoading && !data) {
-      setRowData([]); // Устанавливаем пустой массив, если данных нет и загрузка завершена
+      setRowData([]);
     }
-  }, [data, isTestMode, isLoading]);
+  }, [data, isTestMode, isLoading, error]);
 
-  const currentUserRole = "Администратор"; // Заменить на реальную роль
+  const currentUserRole = "Администратор";
   const isAdmin = [
     "Администратор ИТЦ",
     "Администратор Филиала",
@@ -185,10 +147,42 @@ export const useUserList = () => {
       setRowData(updatedData);
 
       if (!isTestMode && event.data?.id) {
-        await userApi.editUser(event.data.id, { [field]: event.newValue });
+        await userApi.editUser({
+          user_id: event.data.id,
+          [field]: event.newValue,
+        });
       }
     }
   };
 
   return { rowData, columnDefs, onEditSave, isLoading, error };
 };
+
+const mockUsers: User[] = [
+  {
+    id: 1,
+    full_name: "Иванов Иван",
+    company: "ООО Тест",
+    email: "ivanov@example.com",
+    role_id: 1,
+    status_id: 1,
+    domain: "orenburg",
+    position: "Инженер",
+    name: "ivanov",
+    department: "IT",
+    phone: "+79991234567",
+  },
+  {
+    id: 2,
+    full_name: "Петров Петр",
+    company: "ООО Тест",
+    email: "petrov@example.com",
+    role_id: 4,
+    status_id: 3,
+    domain: "orenburg",
+    position: "Менеджер",
+    name: "petrov",
+    department: "HR",
+    phone: "+79997654321",
+  },
+];
