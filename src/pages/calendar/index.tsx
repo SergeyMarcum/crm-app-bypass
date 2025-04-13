@@ -1,259 +1,295 @@
-import React, { useState } from "react";
-import { Calendar, dayjsLocalizer, Views, View } from "react-big-calendar"; // Добавлен импорт View
+import { useState } from "react";
+import {
+  Calendar,
+  dayjsLocalizer,
+  ToolbarProps,
+  Views,
+  View,
+} from "react-big-calendar";
 import dayjs from "dayjs";
 import "dayjs/locale/ru";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
+  Box,
   Typography,
-  DialogActions,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
   Button,
+  CircularProgress,
+  Tooltip,
 } from "@mui/material";
-import { AgGridReact } from "ag-grid-react";
-import { ColDef } from "ag-grid-community";
-import "ag-grid-community/styles/ag-grid.css";
-import "ag-grid-community/styles/ag-theme-alpine.css";
+import { motion } from "framer-motion";
+import CheckModal from "./CheckModal";
+import { useCalendar } from "@/features/calendar/hooks/useCalendar";
+import { Check } from "@/features/calendar/types";
 
+// Настройка локалайзера с dayjs
 dayjs.locale("ru");
 const localizer = dayjsLocalizer(dayjs);
 
-interface CheckEvent {
+// Интерфейс для события календаря
+interface CalendarEvent {
   id: number;
   title: string;
   start: Date;
   end: Date;
-  status?: "planned" | "pending" | "overdue" | "completed";
-  userAvatar?: string;
-  details?: CheckDetail[];
+  resource: Check;
 }
 
-interface CheckDetail {
-  objectName: string;
-  status: "planned" | "pending" | "overdue" | "completed";
-  remarks?: boolean;
-}
+// Кастомный toolbar с правильной типизацией
+const CustomToolbar = ({
+  label,
+  onNavigate,
+  onView,
+}: ToolbarProps<CalendarEvent, object>) => (
+  <Box
+    sx={{
+      display: "flex",
+      justifyContent: "space-between",
+      p: 2,
+      flexWrap: "wrap",
+      gap: 2,
+    }}
+  >
+    <Typography variant="h6">{label}</Typography>
+    <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
+      <Button variant="outlined" onClick={() => onNavigate("PREV")}>
+        Назад
+      </Button>
+      <Button variant="outlined" onClick={() => onNavigate("TODAY")}>
+        Сегодня
+      </Button>
+      <Button variant="outlined" onClick={() => onNavigate("NEXT")}>
+        Вперёд
+      </Button>
+      <Button variant="contained" onClick={() => onView("month")}>
+        Месяц
+      </Button>
+      <Button variant="contained" onClick={() => onView("week")}>
+        Неделя
+      </Button>
+      <Button variant="contained" onClick={() => onView("day")}>
+        День
+      </Button>
+      <Button variant="contained" onClick={() => onView("agenda")}>
+        Повестка
+      </Button>
+    </Box>
+  </Box>
+);
 
-const events: CheckEvent[] = [
-  {
-    id: 1,
-    title: "Завод №1",
-    start: new Date(2025, 3, 1, 14, 0),
-    end: new Date(2025, 3, 1, 15, 0),
-    status: "planned",
-    userAvatar:
-      "https://img.freepik.com/free-photo/cute-cat-studio_23-2150932371.jpg?t=st=1743490231~exp=1743493831~hmac=fad6f1518d6d9043f0c476dd75de4f9578187a26e8f99bde381de3310375fcc3&w=996",
-  },
-  {
-    id: 2,
-    title: "4 объекта",
-    start: new Date(2025, 3, 2, 9, 0),
-    end: new Date(2025, 3, 2, 17, 0),
-    details: [
-      { objectName: "Склад №1", status: "completed", remarks: false },
-      { objectName: "Склад №2", status: "completed", remarks: true },
-      { objectName: "Офис №1", status: "pending" },
-      { objectName: "Офис №2", status: "overdue" },
-    ],
-  },
-];
-
-const CalendarPage: React.FC = () => {
-  const [selectedEvent, setSelectedEvent] = useState<CheckEvent | null>(null);
-  const [view, setView] = useState<View>(Views.MONTH); // Используем тип View
+const CalendarPage = () => {
+  const {
+    filters,
+    setFilters,
+    checks,
+    isLoading,
+    error,
+    objects,
+    operators,
+    resetFilters,
+  } = useCalendar();
+  const [selectedCheck, setSelectedCheck] = useState<Check | null>(null);
+  const [view, setView] = useState<View>(Views.MONTH);
   const [date, setDate] = useState(new Date(2025, 3, 1));
 
-  const eventStyleGetter = (event: CheckEvent) => {
-    const style = {
-      backgroundColor: event.status
-        ? event.status === "planned"
-          ? "#e0e0e0"
-          : event.status === "pending"
-            ? "#fff3cd"
-            : event.status === "overdue"
-              ? "#f8d7da"
-              : "#d4edda"
-        : "#e0e0e0",
-      borderRadius: "3px",
-      color: "black",
-      border: "none",
+  // Отладочный вывод для проверки данных
+  console.log("Checks:", checks);
+  console.log("Filters:", filters);
+
+  const events: CalendarEvent[] = checks.map((check) => {
+    const start = new Date(check.startTime);
+    console.log(
+      `Event ${check.id} startTime:`,
+      check.startTime,
+      "Parsed:",
+      start
+    );
+    return {
+      id: check.id,
+      title: check.objectName,
+      start,
+      end: start,
+      resource: check,
     };
-    return { style };
-  };
+  });
 
-  const handleSelectEvent = (event: CheckEvent) => {
-    setSelectedEvent(event);
-  };
+  console.log("Events:", events);
 
-  const handleClose = () => {
-    setSelectedEvent(null);
+  const handleSelectEvent = (event: CalendarEvent) => {
+    console.log("Selected event:", event);
+    setSelectedCheck(event.resource);
   };
 
   const handleNavigate = (newDate: Date) => {
     setDate(newDate);
   };
 
-  const columnDefs: ColDef<CheckDetail>[] = [
-    { headerName: "Объект", field: "objectName" },
-    {
-      headerName: "Статус",
-      field: "status",
-      valueFormatter: (params) =>
-        params.value === "planned"
-          ? "Запланировано"
-          : params.value === "pending"
-            ? "Ожидается"
-            : params.value === "overdue"
-              ? "Просрочено"
-              : "Проверено",
-    },
-    {
-      headerName: "Замечания",
-      field: "remarks",
-      valueFormatter: (params) => (params.value ? "Да" : "Нет"),
-    },
-  ];
+  const handleFilterChange = (
+    field: keyof typeof filters,
+    value: string | number | null
+  ) => {
+    setFilters({ ...filters, [field]: value });
+  };
+
+  // Кастомизация стилей событий
+  const eventStyleGetter = (event: CalendarEvent) => {
+    const isOverdue = event.resource.status === "overdue";
+    const style = {
+      backgroundColor:
+        event.resource.status === "planned"
+          ? "#1976d2" // Синий для запланированных
+          : event.resource.status === "pending"
+            ? "#ff9800" // Оранжевый для ожидаемых
+            : event.resource.status === "overdue"
+              ? "#d32f2f" // Красный для просроченных
+              : "#4caf50", // Зелёный для проверенных
+      color: "white",
+      borderRadius: "4px",
+      border: "none",
+      padding: isOverdue ? "2px 8px 2px 24px" : "2px 8px",
+      fontSize: "14px",
+      position: "relative" as const,
+      cursor: "pointer",
+      ...(isOverdue && {
+        "&:before": {
+          content: '"⚠"',
+          position: "absolute",
+          left: "8px",
+          top: "50%",
+          transform: "translateY(-50%)",
+          fontSize: "16px",
+        },
+      }),
+    };
+    return { style };
+  };
+
+  // Кастомный рендер события с тултипом и анимацией
+  const eventRenderer = ({ event }: { event: CalendarEvent }) => (
+    <Tooltip
+      title={`Объект: ${event.title}, Оператор: ${event.resource.operator.fullName}, Статус: ${event.resource.status}`}
+    >
+      <motion.div
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.2 }}
+        style={{ cursor: "pointer", width: "100%", height: "100%" }}
+        onClick={() => handleSelectEvent(event)}
+      >
+        <Box sx={{ display: "flex", flexDirection: "column", p: 0.5 }}>
+          <Typography variant="caption" color="inherit">
+            {event.title}
+          </Typography>
+          <Typography variant="caption" color="inherit">
+            {event.resource.operator.fullName}
+          </Typography>
+        </Box>
+      </motion.div>
+    </Tooltip>
+  );
 
   return (
-    <div style={{ padding: "20px" }}>
+    <Box sx={{ p: 3 }}>
       <Typography variant="h4" gutterBottom>
-        {dayjs(date).format("MMMM YYYY")}
+        Календарь работ - {dayjs(date).format("MMMM YYYY")}
       </Typography>
-
-      <Calendar
-        localizer={localizer}
-        events={events}
-        startAccessor="start"
-        endAccessor="end"
-        style={{ height: 600 }}
-        view={view}
-        onView={setView} // Теперь тип совместим
-        date={date}
-        onNavigate={handleNavigate}
-        eventPropGetter={eventStyleGetter}
-        onSelectEvent={handleSelectEvent}
-        messages={{
-          next: "Следующий",
-          previous: "Предыдущий",
-          today: "Сегодня",
-          month: "Месяц",
-          week: "Неделя",
-          day: "День",
-        }}
+      <Box sx={{ display: "flex", gap: 2, my: 2, flexWrap: "wrap" }}>
+        <FormControl sx={{ minWidth: 150 }}>
+          <InputLabel>Статус</InputLabel>
+          <Select
+            value={filters.status}
+            onChange={(e) => handleFilterChange("status", e.target.value)}
+          >
+            <MenuItem value="all">Все</MenuItem>
+            <MenuItem value="planned">Запланировано</MenuItem>
+            <MenuItem value="pending">Ожидается</MenuItem>
+            <MenuItem value="overdue">Просрочено</MenuItem>
+            <MenuItem value="completed">Проверено</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl sx={{ minWidth: 150 }}>
+          <InputLabel>Объект</InputLabel>
+          <Select
+            value={filters.objectId || ""}
+            onChange={(e) =>
+              handleFilterChange("objectId", e.target.value || null)
+            }
+          >
+            <MenuItem value="">Все</MenuItem>
+            {objects.map((obj) => (
+              <MenuItem key={obj.id} value={obj.id}>
+                {obj.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <FormControl sx={{ minWidth: 150 }}>
+          <InputLabel>Оператор</InputLabel>
+          <Select
+            value={filters.operatorId || ""}
+            onChange={(e) =>
+              handleFilterChange("operatorId", e.target.value || null)
+            }
+          >
+            <MenuItem value="">Все</MenuItem>
+            {operators.map((op) => (
+              <MenuItem key={op.id} value={op.id}>
+                {op.fullName}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <Button onClick={resetFilters}>Сбросить</Button>
+      </Box>
+      {isLoading && <CircularProgress />}
+      {error && <Typography color="error">Ошибка: {error}</Typography>}
+      {!isLoading && !error && (
+        <>
+          {events.length === 0 && (
+            <Typography color="warning">Нет событий для отображения</Typography>
+          )}
+          <Calendar<CalendarEvent>
+            localizer={localizer}
+            events={events}
+            startAccessor="start"
+            endAccessor="end"
+            style={{ height: 600 }}
+            view={view}
+            onView={setView}
+            date={date}
+            onNavigate={handleNavigate}
+            eventPropGetter={eventStyleGetter}
+            components={{
+              event: eventRenderer,
+              toolbar: CustomToolbar,
+            }}
+            onSelectEvent={handleSelectEvent}
+            messages={{
+              today: "Сегодня",
+              previous: "Назад",
+              next: "Вперёд",
+              month: "Месяц",
+              week: "Неделя",
+              day: "День",
+              agenda: "Повестка",
+              date: "Дата",
+              time: "Время",
+              event: "Событие",
+              noEventsInRange: "Нет событий в этом диапазоне",
+              showMore: (total: number) => `+ ещё ${total}`,
+            }}
+          />
+        </>
+      )}
+      <CheckModal
+        open={!!selectedCheck}
+        onClose={() => setSelectedCheck(null)}
+        check={selectedCheck}
       />
-      <Dialog
-        open={!!selectedEvent}
-        onClose={handleClose}
-        maxWidth="md"
-        fullWidth
-      >
-        {selectedEvent && (
-          <>
-            <DialogTitle>
-              {selectedEvent.details
-                ? `Проверки за ${dayjs(selectedEvent.start).format("DD MMMM YYYY")}`
-                : selectedEvent.title}
-            </DialogTitle>
-            <DialogContent>
-              {selectedEvent.details ? (
-                <div>
-                  <Typography>
-                    Всего запланировано: {selectedEvent.details.length}
-                  </Typography>
-                  <Typography>
-                    Режим ожидания:{" "}
-                    {
-                      selectedEvent.details.filter(
-                        (d) => d.status === "planned"
-                      ).length
-                    }
-                  </Typography>
-                  <Typography>
-                    Ожидает загрузки:{" "}
-                    {
-                      selectedEvent.details.filter(
-                        (d) => d.status === "pending"
-                      ).length
-                    }
-                  </Typography>
-                  <Typography>
-                    Проверено:{" "}
-                    {
-                      selectedEvent.details.filter(
-                        (d) => d.status === "completed"
-                      ).length
-                    }
-                  </Typography>
-                  <Typography>
-                    Без замечаний:{" "}
-                    {
-                      selectedEvent.details.filter(
-                        (d) => d.status === "completed" && !d.remarks
-                      ).length
-                    }
-                  </Typography>
-                  <Typography>
-                    С недостатками:{" "}
-                    {
-                      selectedEvent.details.filter(
-                        (d) => d.status === "completed" && d.remarks
-                      ).length
-                    }
-                  </Typography>
-                  <Typography>
-                    Просрочено:{" "}
-                    {
-                      selectedEvent.details.filter(
-                        (d) => d.status === "overdue"
-                      ).length
-                    }
-                  </Typography>
-                  <div
-                    className="ag-theme-alpine"
-                    style={{ height: 300, width: "100%", marginTop: 20 }}
-                  >
-                    <AgGridReact
-                      rowData={selectedEvent.details}
-                      columnDefs={columnDefs}
-                    />
-                  </div>
-                </div>
-              ) : (
-                <div>
-                  <Typography>Объект: {selectedEvent.title}</Typography>
-                  <Typography>
-                    Время: {dayjs(selectedEvent.start).format("HH:mm")}
-                  </Typography>
-                  <Typography>
-                    Статус:{" "}
-                    {selectedEvent.status === "planned"
-                      ? "Запланировано"
-                      : selectedEvent.status === "pending"
-                        ? "Ожидается"
-                        : selectedEvent.status === "overdue"
-                          ? "Просрочено"
-                          : "Проверено"}
-                  </Typography>
-                  {selectedEvent.userAvatar && (
-                    <img
-                      src={selectedEvent.userAvatar}
-                      alt="User"
-                      style={{ width: 40, height: 40, borderRadius: "50%" }}
-                    />
-                  )}
-                </div>
-              )}
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={handleClose} color="primary">
-                Закрыть
-              </Button>
-            </DialogActions>
-          </>
-        )}
-      </Dialog>
-    </div>
+    </Box>
   );
 };
 
