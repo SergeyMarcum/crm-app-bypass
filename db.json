@@ -53,7 +53,8 @@
         "position": "Инженер",
         "name": "gordeev",
         "department": "ОСЭиРЛИУС",
-        "phone": "9030000000"
+        "phone": "9030000000",
+        "avatar": "/assets/avatar-1.png"
       },
       {
         "id": 8,
@@ -66,7 +67,8 @@
         "position": "Инженер",
         "name": "garin",
         "department": "ОСЭиРЛИУС",
-        "phone": "+7(3532)10-10-08"
+        "phone": "+7(3532)10-10-08",
+        "avatar": "/assets/avatar-1.png"
       },
       {
         "id": 9,
@@ -79,7 +81,8 @@
         "position": "Начальник отдела",
         "name": "barin",
         "department": "ОСЭиРЛИУС",
-        "phone": "+7(3532)10-10-09"
+        "phone": "+7(3532)10-10-09",
+        "avatar": "/assets/avatar-1.png"
       },
       {
         "id": 10,
@@ -92,7 +95,8 @@
         "position": "Заместитель начальника отдела",
         "name": "zarin",
         "department": "ОСЭиРЛИУС",
-        "phone": "+7(3532)10-10-10"
+        "phone": "+7(3532)10-10-10",
+        "avatar": "/assets/avatar-1.png"
       },
       {
         "id": 11,
@@ -105,7 +109,8 @@
         "position": "Инженер",
         "name": "sharin",
         "department": "ОСЭиРЛИУС",
-        "phone": "+7(3532)10-10-11"
+        "phone": "+7(3532)10-10-11",
+        "avatar": "/assets/avatar-1.png"
       },
       {
         "id": 12,
@@ -118,7 +123,8 @@
         "position": "Начальник отдела",
         "name": "sharin",
         "department": "ТоСё",
-        "phone": "+7(3532)10-10-12"
+        "phone": "+7(3532)10-10-12",
+        "avatar": "/assets/avatar-1.png"
       },
       {
         "id": 3,
@@ -131,7 +137,8 @@
         "position": "Инженер",
         "name": "frontend",
         "department": "ОСЭиРЛИУС",
-        "phone": "+7(3532)10-10-03"
+        "phone": "+7(3532)10-10-03",
+        "avatar": "/assets/avatar-1.png"
       }
     ],
     "departments": [
