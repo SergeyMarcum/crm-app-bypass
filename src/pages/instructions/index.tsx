@@ -203,7 +203,15 @@ const InstructionsPage: React.FC = () => {
   };
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box
+      sx={{
+        p: { xs: 2, sm: 3, md: 4 },
+
+        minWidth: "1300px",
+        mx: "auto",
+        minHeight: "100vh",
+      }}
+    >
       {/* Заголовок */}
       <Typography variant="h4" gutterBottom>
         Инструкции

@@ -134,7 +134,15 @@ export function DashboardPage() {
   const cardSx = { elevation: 3, borderRadius: 4, p: 2 };
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box
+      sx={{
+        p: { xs: 2, sm: 3, md: 4 },
+
+        minWidth: "1300px",
+        mx: "auto",
+        minHeight: "100vh",
+      }}
+    >
       {/* Метрики */}
       <Grid container spacing={3} sx={{ mb: 4, width: "100%" }}>
         <Grid size={{ xs: 12, sm: 4 }}>

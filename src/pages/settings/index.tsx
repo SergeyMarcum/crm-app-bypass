@@ -40,6 +40,9 @@ const cardSx = {
   borderRadius: 2,
   boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
   bgcolor: "background.paper",
+
+  minWidth: "1300px",
+  mx: "auto",
 };
 
 // Интерфейсы

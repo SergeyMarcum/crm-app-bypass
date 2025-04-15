@@ -233,7 +233,8 @@ const CalendarPage = () => {
     <Box
       sx={{
         p: { xs: 2, sm: 3, md: 4 },
-        maxWidth: "1300px",
+
+        minWidth: "1300px",
         mx: "auto",
         minHeight: "100vh",
       }}

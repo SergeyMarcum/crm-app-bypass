@@ -532,7 +532,15 @@ const UsersPage: React.FC = () => {
   const hasSelectedRows = (gridApi?.getSelectedNodes()?.length ?? 0) > 0;
 
   return (
-    <Box sx={{ p: 3 }}>
+    <Box
+      sx={{
+        p: { xs: 2, sm: 3, md: 4 },
+
+        minWidth: "1300px",
+        mx: "auto",
+        minHeight: "100vh",
+      }}
+    >
       <Typography variant="h4">Список пользователей</Typography>
       <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 2 }}>
         Информация по пользователям данного филиала
