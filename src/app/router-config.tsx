@@ -8,7 +8,7 @@ import { ProtectedRoute, LogoutRoute } from "./routes";
 import ErrorPage from "@/pages/ErrorPage";
 
 const LoginPage = lazy(() => import("@/pages/login"));
-const DashboardPage = lazy(() => import("@/pages/dashboard"));
+const DashboardPage = lazy(() => import("@/pages/dashboard/index"));
 const CalendarPage = lazy(() => import("@/pages/calendar"));
 const TasksCreatePage = lazy(() => import("@/pages/tasks/create"));
 const TasksViewPage = lazy(() => import("@/pages/tasks/view"));

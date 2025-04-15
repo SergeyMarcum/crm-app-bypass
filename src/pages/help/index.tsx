@@ -48,11 +48,14 @@ const HelpPage: React.FC = () => {
   return (
     <Box
       sx={{
+        p: { xs: 2, sm: 3, md: 4 },
+
+        minWidth: "1300px",
+        mx: "auto",
         minHeight: "100vh",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
-        p: 3,
       }}
     >
       <Card sx={{ maxWidth: 600, width: "100%" }}>
