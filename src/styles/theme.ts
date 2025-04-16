@@ -1,6 +1,6 @@
 // src/styles/theme.ts
 import { createTheme } from "@mui/material/styles";
-import { indigo, purple, grey } from "@mui/material/colors";
+import { indigo, purple, grey, blue } from "@mui/material/colors";
 
 // Функция для определения системной темы
 const getSystemTheme = (): "light" | "dark" => {
@@ -19,9 +19,9 @@ export const getTheme = (theme: ThemeMode = "light") => {
     palette: {
       mode, // 'light' или 'dark'
       primary: {
-        main: indigo[500], // Синий из макета Devias Kit
-        light: indigo[300],
-        dark: indigo[700],
+        main: blue[700], // Синий из макета Devias Kit
+        light: blue[300],
+        dark: blue[700],
         contrastText: "#ffffff", // Контрастный белый текст для кнопок
       },
       secondary: {

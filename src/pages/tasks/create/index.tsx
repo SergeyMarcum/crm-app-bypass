@@ -146,12 +146,11 @@ const CreateTaskPage: React.FC = () => {
         sx={{
           p: { xs: 2, sm: 3, md: 4 },
 
-          minWidth: "1300px",
           mx: "auto",
           minHeight: "100vh",
         }}
       >
-        <Grid container spacing={4}>
+        <Grid container spacing={4} sx={{ width: "1400px" }}>
           <Card sx={cardSx}>
             <CardHeader
               avatar={
@@ -169,7 +168,7 @@ const CreateTaskPage: React.FC = () => {
             <CardContent>
               {/* Основная форма */}
               <Grid size={{ xs: 12, md: 12 }}>
-                <Stack spacing={2}>
+                <Stack spacing={2} sx={{ width: "1400px" }}>
                   <Stepper
                     activeStep={activeStep}
                     orientation="vertical"
@@ -205,7 +204,7 @@ const CreateTaskPage: React.FC = () => {
                       <CustomStepContent>
                         <form onSubmit={handleSubmit(onSubmit)}>
                           <Stack spacing={3}>
-                            <Box>
+                            <Box sx={{ width: "950px", paddingTop: "25px" }}>
                               <FormLabel>
                                 <Typography variant="h6">
                                   Выберите объект
@@ -302,7 +301,7 @@ const CreateTaskPage: React.FC = () => {
                               )}
                             />
 
-                            <Box>
+                            <Box sx={{ width: "950px", paddingTop: "25px" }}>
                               <FormLabel>
                                 <Typography variant="h6">
                                   Выберите оператора
@@ -336,6 +335,7 @@ const CreateTaskPage: React.FC = () => {
                               control={control}
                               render={({ field }) => (
                                 <TextField
+                                  sx={{ width: "950px", paddingTop: "25px" }}
                                   {...field}
                                   label="Комментарий"
                                   multiline
@@ -347,6 +347,7 @@ const CreateTaskPage: React.FC = () => {
 
                             <Button
                               variant="contained"
+                              sx={{ width: "950px" }}
                               onClick={handleNext}
                               disabled={!isValid}
                               endIcon={
@@ -416,15 +417,19 @@ const CreateTaskPage: React.FC = () => {
                           </Stack>
 
                           <Grid container spacing={2}>
-                            <Grid size={{ xs: 6 }}>
+                            <Grid size={{ xs: 8 }}>
                               <TextField label="Поиск параметров" fullWidth />
                             </Grid>
-                            <Grid size={{ xs: 6 }}>
+                            <Grid size={{ xs: 10 }}>
                               <Pagination count={10} />
                             </Grid>
                           </Grid>
 
-                          <Stack direction="row" spacing={2}>
+                          <Stack
+                            direction="row"
+                            spacing={2}
+                            sx={{ width: "950px", paddingTop: "25px" }}
+                          >
                             <TextField label="Новый параметр" fullWidth />
                             <Button variant="contained">Добавить</Button>
                           </Stack>
@@ -478,135 +483,124 @@ const CreateTaskPage: React.FC = () => {
                         </Typography>
                       </StepLabel>
                       <CustomStepContent>
-                        <Card elevation={1}>
-                          <CardContent>
-                            <Stack spacing={3}>
-                              <Stack
-                                direction="row"
-                                justifyContent="space-between"
-                              >
-                                <Typography variant="h4">
-                                  Отчет по заданию
-                                </Typography>
-                              </Stack>
+                        <Stack spacing={3}>
+                          <Stack direction="row" justifyContent="space-between">
+                            <Typography variant="h4">
+                              Отчет по заданию
+                            </Typography>
+                          </Stack>
 
+                          <Stack spacing={1}>
+                            <Stack direction="row" spacing={2}>
+                              <Typography variant="subtitle2">
+                                Дата проверки:
+                              </Typography>
+                              <Typography>
+                                {formData.checkDate
+                                  ? formData.checkDate.format("DD.MM.YYYY")
+                                  : "Не указана"}
+                              </Typography>
+                            </Stack>
+                            <Stack direction="row" spacing={2}>
+                              <Typography variant="subtitle2">
+                                Наименование объекта:
+                              </Typography>
+                              <Typography>
+                                {formData.objectId === "1"
+                                  ? "Объект 1"
+                                  : formData.objectId === "2"
+                                    ? "Объект 2"
+                                    : "Не указан"}
+                              </Typography>
+                            </Stack>
+                          </Stack>
+
+                          <Grid container spacing={3}>
+                            <Grid size={{ xs: 12, md: 6 }}>
                               <Stack spacing={1}>
-                                <Stack direction="row" spacing={2}>
-                                  <Typography variant="subtitle2">
-                                    Дата проверки:
-                                  </Typography>
-                                  <Typography>
-                                    {formData.checkDate
-                                      ? formData.checkDate.format("DD.MM.YYYY")
-                                      : "Не указана"}
-                                  </Typography>
-                                </Stack>
-                                <Stack direction="row" spacing={2}>
-                                  <Typography variant="subtitle2">
-                                    Наименование объекта:
-                                  </Typography>
-                                  <Typography>
-                                    {formData.objectId === "1"
-                                      ? "Объект 1"
-                                      : formData.objectId === "2"
-                                        ? "Объект 2"
-                                        : "Не указан"}
-                                  </Typography>
-                                </Stack>
-                              </Stack>
-
-                              <Grid container spacing={3}>
-                                <Grid size={{ xs: 12, md: 6 }}>
-                                  <Stack spacing={1}>
-                                    <Typography variant="subtitle1">
-                                      Информация по объекту
-                                    </Typography>
-                                    <Typography variant="body2">
-                                      Адрес: ул. Примерная, д. 123, г. Примерный
-                                      <br />
-                                      Полное наименование: ООО "Примерный
-                                      объект"
-                                      <br />
-                                      Характеристики: Примерные характеристики
-                                      объекта
-                                    </Typography>
-                                  </Stack>
-                                </Grid>
-                                <Grid size={{ xs: 12, md: 6 }}>
-                                  <Stack spacing={1}>
-                                    <Typography variant="subtitle1">
-                                      Оператор
-                                    </Typography>
-                                    <Typography variant="body2">
-                                      {formData.operatorId === "1"
-                                        ? "Иванов И.И."
-                                        : formData.operatorId === "2"
-                                          ? "Петров П.П."
-                                          : "Не указан"}
-                                      <br />
-                                      Должность: Инспектор
-                                      <br />
-                                      Отдел: Отдел проверок
-                                      <br />
-                                      Телефон: +7 (123) 456-78-90
-                                      <br />
-                                      Email: example@company.com
-                                    </Typography>
-                                  </Stack>
-                                </Grid>
-                              </Grid>
-
-                              <Stack spacing={1}>
-                                <Typography variant="h6">
-                                  Комментарий
+                                <Typography variant="subtitle1">
+                                  Информация по объекту
                                 </Typography>
                                 <Typography variant="body2">
-                                  {formData.comment ||
-                                    "Комментарий отсутствует"}
+                                  Адрес: ул. Примерная, д. 123, г. Примерный
+                                  <br />
+                                  Полное наименование: ООО "Примерный объект"
+                                  <br />
+                                  Характеристики: Примерные характеристики
+                                  объекта
                                 </Typography>
                               </Stack>
-
+                            </Grid>
+                            <Grid size={{ xs: 12, md: 6 }}>
                               <Stack spacing={1}>
-                                <Typography variant="h6">
-                                  Список параметров проверки
+                                <Typography variant="subtitle1">
+                                  Оператор
                                 </Typography>
-                                <Table>
-                                  <TableHead>
-                                    <TableRow>
-                                      <TableCell>Наименование</TableCell>
-                                      <TableCell>Статус</TableCell>
-                                    </TableRow>
-                                  </TableHead>
-                                  <TableBody>
-                                    {checkParams.map((param, index) => (
-                                      <TableRow key={index}>
-                                        <TableCell>{param}</TableCell>
-                                        <TableCell>Проверено</TableCell>
-                                      </TableRow>
-                                    ))}
-                                  </TableBody>
-                                </Table>
+                                <Typography variant="body2">
+                                  {formData.operatorId === "1"
+                                    ? "Иванов И.И."
+                                    : formData.operatorId === "2"
+                                      ? "Петров П.П."
+                                      : "Не указан"}
+                                  <br />
+                                  Должность: Инспектор
+                                  <br />
+                                  Отдел: Отдел проверок
+                                  <br />
+                                  Телефон: +7 (123) 456-78-90
+                                  <br />
+                                  Email: example@company.com
+                                </Typography>
                               </Stack>
+                            </Grid>
+                          </Grid>
 
-                              <Stack direction="row" spacing={2}>
-                                <Button
-                                  variant="outlined"
-                                  onClick={handleBack}
-                                  startIcon={<ArrowBack />}
-                                >
-                                  Назад
-                                </Button>
-                                <Button
-                                  variant="contained"
-                                  onClick={handleNext}
-                                  endIcon={<ArrowForward />}
-                                >
-                                  Далее
-                                </Button>
-                              </Stack>
-                            </Stack>
-                          </CardContent>
-                        </Card>
+                          <Stack spacing={1}>
+                            <Typography variant="h6">Комментарий</Typography>
+                            <Typography variant="body2">
+                              {formData.comment || "Комментарий отсутствует"}
+                            </Typography>
+                          </Stack>
+
+                          <Stack spacing={1}>
+                            <Typography variant="h6">
+                              Список параметров проверки
+                            </Typography>
+                            <Table>
+                              <TableHead>
+                                <TableRow>
+                                  <TableCell>Наименование</TableCell>
+                                  <TableCell>Статус</TableCell>
+                                </TableRow>
+                              </TableHead>
+                              <TableBody>
+                                {checkParams.map((param, index) => (
+                                  <TableRow key={index}>
+                                    <TableCell>{param}</TableCell>
+                                    <TableCell>Проверено</TableCell>
+                                  </TableRow>
+                                ))}
+                              </TableBody>
+                            </Table>
+                          </Stack>
+
+                          <Stack direction="row" spacing={2}>
+                            <Button
+                              variant="outlined"
+                              onClick={handleBack}
+                              startIcon={<ArrowBack />}
+                            >
+                              Назад
+                            </Button>
+                            <Button
+                              variant="contained"
+                              onClick={handleNext}
+                              endIcon={<ArrowForward />}
+                            >
+                              Далее
+                            </Button>
+                          </Stack>
+                        </Stack>
                       </CustomStepContent>
                     </Step>
 
@@ -633,28 +627,38 @@ const CreateTaskPage: React.FC = () => {
                           <Typography variant="h6">
                             Сохранение и скачивание
                           </Typography>
-                          <TextField
-                            label="Пароль для XML-файла"
-                            type="password"
-                            value={xmlPassword}
-                            onChange={(e) => setXmlPassword(e.target.value)}
-                            fullWidth
-                            helperText="Введите пароль для защиты XML-файла (опционально)"
-                          />
-                          <Button
-                            variant="contained"
-                            startIcon={<Download />}
-                            onClick={downloadPDF}
-                          >
-                            Скачать отчет в PDF
-                          </Button>
-                          <Button
-                            variant="contained"
-                            startIcon={<Download />}
-                            onClick={downloadXML}
-                          >
-                            Скачать задание в XML
-                          </Button>
+
+                          <Grid container spacing={3}>
+                            <Grid size={{ xs: 7 }}>
+                              <TextField
+                                label="Пароль для XML-файла"
+                                type="password"
+                                value={xmlPassword}
+                                fullWidth
+                                onChange={(e) => setXmlPassword(e.target.value)}
+                                helperText="Введите пароль для защиты XML-файла (опционально)"
+                              />
+                            </Grid>
+                            <Grid size={{ xs: 2 }}>
+                              <Button
+                                variant="contained"
+                                startIcon={<Download />}
+                                onClick={downloadPDF}
+                              >
+                                Скачать отчет в PDF
+                              </Button>
+                            </Grid>
+                            <Grid size={{ xs: 3 }}>
+                              <Button
+                                variant="contained"
+                                startIcon={<Download />}
+                                onClick={downloadXML}
+                              >
+                                Скачать задание в XML
+                              </Button>
+                            </Grid>
+                          </Grid>
+
                           <Stack direction="row" spacing={2}>
                             <Button
                               variant="outlined"
@@ -782,11 +786,11 @@ const CreateTaskPage: React.FC = () => {
                 ))}
               </Stack>
               <Grid container spacing={2}>
-                <Grid size={{ xs: 6 }}>
+                <Grid size={{ xs: 12 }}>
                   <TextField label="Поиск несоответствий" fullWidth />
                 </Grid>
-                <Grid size={{ xs: 6 }}>
-                  <Pagination count={10} />
+                <Grid size={{ xs: 12 }}>
+                  <Pagination count={5} />
                 </Grid>
               </Grid>
               <Stack direction="row" spacing={2}>
