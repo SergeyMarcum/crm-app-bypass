@@ -11,9 +11,8 @@ import {
   List,
   ListItem,
   Divider,
-  // useTheme,
-  //useMediaQuery,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import {
   Bell,
   Gear,
@@ -26,10 +25,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function ToolbarActions() {
+  const theme = useTheme();
   const navigate = useNavigate();
-  /*const theme = useTheme();
-    const isSidebarCollapsed = useMediaQuery(theme.breakpoints.down("md"));
-    const sidebarWidth = isSidebarCollapsed ? 56 : 240; // Исправляем ширину боковой панели (по умолчанию в DashboardLayout: 56px для свёрнутой, 240px для полной)*/
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -100,11 +97,11 @@ export default function ToolbarActions() {
         orientation="vertical"
         flexItem
         sx={{
-          mx: 1,
-          bgcolor: "grey.300",
-          opacity: "25%",
+          mx: theme.spacing(1),
+          bgcolor: "grey.100",
+          opacity: 0.25,
           width: "2px",
-          height: "24px",
+          height: 24,
           position: "absolute",
           left: "330px",
           top: "50%",
@@ -116,7 +113,7 @@ export default function ToolbarActions() {
         onClick={handleSearchOpen}
         sx={{
           position: "absolute",
-          left: "350px",
+          left: theme.spacing(46.875),
           top: "50%",
           transform: "translateY(-50%)",
         }}
@@ -124,7 +121,7 @@ export default function ToolbarActions() {
         <MagnifyingGlass />
       </IconButton>
 
-      <IconButton color="inherit" sx={{ mr: 1 }}>
+      <IconButton color="inherit" sx={{ mr: theme.spacing(1) }}>
         <Badge badgeContent={3} color="error">
           <Bell />
         </Badge>
@@ -132,7 +129,7 @@ export default function ToolbarActions() {
       <IconButton
         color="inherit"
         onClick={() => navigate("/settings")}
-        sx={{ mr: 1 }}
+        sx={{ mr: theme.spacing(1) }}
       >
         <Gear />
       </IconButton>
@@ -141,16 +138,17 @@ export default function ToolbarActions() {
         orientation="vertical"
         flexItem
         sx={{
-          mx: 1,
-          bgcolor: "grey.300",
+          mx: theme.spacing(1),
+          bgcolor: "grey.100",
+          opacity: 0.25,
           width: "2px",
-          height: "24px",
+          height: 24,
           alignSelf: "center",
         }}
       />
 
       <IconButton onClick={handleMenu}>
-        <Avatar sx={{ ml: 2 }}>U</Avatar>
+        <Avatar sx={{ ml: theme.spacing(2) }}>U</Avatar>
       </IconButton>
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem onClick={handleClose}>
@@ -158,7 +156,7 @@ export default function ToolbarActions() {
         </MenuItem>
         <MenuItem onClick={() => navigate("/settings")}>Профиль</MenuItem>
         <MenuItem onClick={handleSignOut}>
-          <SignOut style={{ marginRight: 8 }} /> Выход
+          <SignOut style={{ marginRight: theme.spacing(1) }} /> Выход
         </MenuItem>
       </Menu>
 
@@ -170,15 +168,21 @@ export default function ToolbarActions() {
             left: "50%",
             transform: "translate(-50%, -50%)",
             width: 600,
-            bgcolor: "background.paper",
-            boxShadow: 24,
-            p: 4,
-            borderRadius: 2,
+            bgcolor: theme.palette.background.paper,
+            boxShadow: theme.shadows[4],
+            p: theme.spacing(4),
+            borderRadius: theme.shape.borderRadius,
             maxHeight: "80vh",
             overflowY: "auto",
           }}
         >
-          <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              mb: theme.spacing(2),
+            }}
+          >
             <Typography variant="h6">Поиск</Typography>
             <IconButton onClick={handleSearchClose}>
               <X />
@@ -190,16 +194,21 @@ export default function ToolbarActions() {
             placeholder="Поиск..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            sx={{ mb: 2 }}
+            sx={{ mb: theme.spacing(2) }}
             InputProps={{
               startAdornment: (
-                <MagnifyingGlass style={{ marginRight: 8, color: "gray" }} />
+                <MagnifyingGlass
+                  style={{
+                    marginRight: theme.spacing(1),
+                    color: theme.palette.text.secondary,
+                  }}
+                />
               ),
             }}
           />
           {searchQuery ? (
             <>
-              <Typography variant="subtitle1" sx={{ mb: 1 }}>
+              <Typography variant="subtitle1" sx={{ mb: theme.spacing(1) }}>
                 Платформа
               </Typography>
               <List>
@@ -218,8 +227,8 @@ export default function ToolbarActions() {
             </>
           ) : (
             <Typography variant="body2" color="text.secondary">
-              <LightbulbFilament color="orange" /> Советы: Введите поиск,
-              введите ключевое слово и нажмите Enter
+              <LightbulbFilament color="orange" /> Советы: Введите ключевое
+              слово и нажмите Enter
             </Typography>
           )}
         </Box>
