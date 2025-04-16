@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAuthStore } from "@/features/auth/store";
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://192.168.1.248:8081", // FastAPI адрес
+  baseURL: import.meta.env.VITE_API_URL || "http://192.168.1.248:8080", // FastAPI адрес
   timeout: 10000,
 });
 

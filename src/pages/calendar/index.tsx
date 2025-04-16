@@ -234,7 +234,7 @@ const CalendarPage = () => {
       sx={{
         p: { xs: 2, sm: 3, md: 4 },
 
-        minWidth: "1300px",
+        minWidth: "1400px",
         mx: "auto",
         minHeight: "100vh",
       }}
@@ -319,7 +319,7 @@ const CalendarPage = () => {
                 events={events}
                 startAccessor="start"
                 endAccessor="end"
-                style={{ height: 600 }}
+                style={{ height: 800 }}
                 view={view}
                 onView={setView}
                 date={date}
