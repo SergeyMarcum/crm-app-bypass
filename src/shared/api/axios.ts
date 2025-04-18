@@ -1,39 +1,31 @@
-import axios from "axios";
-import { useAuthStore } from "@/features/auth/store";
+import axios, { AxiosInstance } from "axios";
 
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://192.168.1.248:8080", // FastAPI адрес
-  timeout: 10000,
+const baseURL = import.meta.env.VITE_API_URL; // URL FastAPI из .env
+
+const api: AxiosInstance = axios.create({
+  baseURL,
+  withCredentials: true,
 });
 
-const testApi = axios.create({
-  baseURL: import.meta.env.VITE_API_URL_TEST || "http://localhost:3001", // JSON-сервер
-  timeout: 10000,
-});
-
+// Перехватчик запросов: добавляем session_code из localStorage
 api.interceptors.request.use((config) => {
-  const { domain, username, sessionCode } = useAuthStore.getState();
-  if (domain && username && sessionCode) {
-    config.params = {
-      ...config.params,
-      domain,
-      username,
-      session_code: sessionCode,
-    };
+  const sessionCode = localStorage.getItem("session_code");
+  if (sessionCode) {
+    config.params = { ...config.params, session_code: sessionCode };
   }
   return config;
 });
 
+// Перехватчик ответов: обработка ошибок
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.error("API error:", error.message);
     if (error.response?.status === 401) {
-      useAuthStore.getState().logout();
+      localStorage.removeItem("session_code");
+      window.location.href = "/login";
     }
     return Promise.reject(error);
   }
 );
 
-export { api, testApi };
-export default { api, testApi };
+export default api;
